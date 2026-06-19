@@ -71,7 +71,7 @@ public/
 └── Advaya_Verma_Resume_v1.pdf
 ```
 
-## Deployment
+<!-- ## Deployment
 
 1. Push the repo to GitHub.
 2. Import the project on [Vercel](https://vercel.com) (or Netlify).
@@ -80,4 +80,4 @@ public/
 
 ## License
 
-Personal portfolio — all rights reserved.
+Personal portfolio — all rights reserved. -->
