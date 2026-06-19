@@ -120,4 +120,9 @@ export const certifications = [
     issuer: "Oracle University",
     date: "Oct 2025",
   },
+  {
+    title: "Hashgraph Developer Course",
+    issuer: "The Hashgraph Association",
+    date: "Mar 2026",
+  },
 ];
