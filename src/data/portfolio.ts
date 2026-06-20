@@ -5,7 +5,7 @@ export const profile = {
   tagline: "Final-year Computer Science student · ML, Backend & Frontend",
   summary:
     "Final-year Computer Science undergraduate at VIT-AP with hands-on experience in machine learning, NLP, backend development, and frontend engineering. Proficient in Python, REST APIs, and cloud-native tools including Docker and FastAPI, with experience building responsive, interactive interfaces using React, HTML, CSS, and JavaScript. Oracle-certified Generative AI professional with a strong foundation in data structures, algorithms, and software engineering principles. Seeking a software engineering or ML internship to apply skills in real-world AI, backend, and full-stack projects.",
-  resumeFile: "/Advaya_Verma_Resume_v1.pdf",
+  resumeFile: "/Advaya_Verma_Resume_v2.pdf",
   links: {
     linkedin: "http://www.linkedin.com/in/advaya-verma-b49249285",
     github: "https://github.com/Advayaverma",
