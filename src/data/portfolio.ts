@@ -65,6 +65,20 @@ export const projects = [
     demo: "",
   },
   {
+    title: "Chemical Risk Analyzer",
+    tech: ["Python", "FastAPI", "SQLite", "SQLAlchemy", "HTML", "CSS", "JavaScript"],
+    description:
+      "A regulatory chemical risk profiling system for food products and cosmetics under FSSAI and CDSCO guidelines, featuring a FastAPI backend and a responsive Single-Page Application (SPA) dashboard.",
+    highlights: [
+      "Developed a rule-based chemical risk assessment platform with SQLite, SQLAlchemy, and FastAPI to profile products against FSSAI and CDSCO regulations.",
+      "Built an interactive, responsive Single-Page Application (SPA) dashboard using HTML, CSS, and Vanilla JavaScript to visualize key system stats, scanned products, and flagged risks.",
+      "Implemented an automated regex-based parsing and cleaning engine to match ingredient lists against 17+ regulated substances and calculate safety grades (A-F).",
+      "Exposed structured REST endpoints (documented via Swagger UI) for CRUD operations on chemical regulations, real-time ad-hoc analysis, and automated database seeding.",
+    ],
+    github: "https://github.com/Advayaverma/Chemical-Risk-Analyzer",
+    demo: "",
+  },
+  {
     title: "Digital Library Web App",
     tech: ["HTML", "CSS", "JavaScript"],
     description:
