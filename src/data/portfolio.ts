@@ -55,6 +55,43 @@ export const skills = {
 
 export const projects = [
   {
+    title: "Production-Style RAG Knowledge Assistant",
+    tech: [
+      "Python",
+      "FastAPI",
+      "FAISS",
+      "Sentence Transformers",
+      "BM25",
+      "Cross-Encoder",
+      "Gemini API",
+      "RAG",
+    ],
+    description:
+      "A production-grade Retrieval-Augmented Generation (RAG) assistant featuring two-stage hybrid search (FAISS dense vectors + BM25Okapi sparse keywords), Cross-Encoder reranking, and Gemini 1.5 Flash grounded QA with source citations.",
+    highlights: [
+      "Engineered a two-stage hybrid retrieval pipeline combining FAISS dense vector search (all-MiniLM-L6-v2) and a custom BM25Okapi inverted index using Reciprocal Rank Fusion (RRF) and Alpha score fusion.",
+      "Integrated cross-encoder reranking (ms-marco-MiniLM-L-6-v2) for deep query-passage cross-attention, significantly improving top-k precision for ambiguous and nuanced queries.",
+      "Built modular ingestion and sliding-window chunking pipelines with page-aware PDF/text parsing and 384-dimensional embedding generation.",
+      "Implemented prompt grounding and citation mapping with Gemini 1.5 Flash to eliminate hallucinations and return structured source citations via FastAPI REST endpoints.",
+    ],
+    github: "https://github.com/Advayaverma/Production-Style-RAG-Knowledge-Assistant",
+    demo: "",
+  },
+  {
+    title: "Social Media Content Analyzer",
+    tech: ["Python", "FastAPI", "React", "Tailwind CSS", "Docker", "PyMuPDF", "Tesseract OCR"],
+    description:
+      "A full-stack document and image analysis platform that extracts text from PDFs and images via OCR, performing deterministic engagement analysis and readability scoring for social media optimization.",
+    highlights: [
+      "Developed a full-stack content review platform using FastAPI and React (Vite + Tailwind CSS) to extract, analyze, and optimize drafts from PDFs and images.",
+      "Integrated PyMuPDF for multi-page PDF parsing and Tesseract OCR (via Pillow and pytesseract) for robust optical character recognition across image uploads.",
+      "Engineered a deterministic analysis engine evaluating Flesch readability scores, sentiment categorization, and engagement signals (hook strength, CTA detection, and hashtag density).",
+      "Containerized the entire application with Docker and Docker Compose with pre-configured OCR engines for streamlined, portable deployment.",
+    ],
+    github: "https://github.com/Advayaverma/Social-Media-Content-Analyzer",
+    demo: "",
+  },
+  {
     title: "Semantic Search System",
     tech: ["Python", "FastAPI", "FAISS", "Docker", "NLP", "Scikit-learn"],
     description:
@@ -66,6 +103,28 @@ export const projects = [
       "Exposed REST API endpoints via FastAPI and containerized the full application using Docker, enabling one-command portable deployment.",
     ],
     github: "https://github.com/Advayaverma/Semantic-Search-System",
+    demo: "",
+  },
+  {
+    title: "Stock Analysis & Price Prediction",
+    tech: [
+      "Python",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy",
+      "yfinance",
+      "Matplotlib",
+      "Docker",
+    ],
+    description:
+      "An end-to-end financial analytics and machine learning pipeline that fetches historical market data, engineers technical indicators, and trains predictive models to forecast stock price trends.",
+    highlights: [
+      "Automated historical OHLCV market data collection and local caching via yfinance across configurable tickers and time horizons.",
+      "Engineered technical trading indicators including SMA, EMA, RSI, MACD, Bollinger Bands, and rolling volatility metrics using Pandas and NumPy.",
+      "Trained and evaluated multiple ML models (Ridge Regression, Random Forest, Gradient Boosting) using RMSE, MAE, and R² scores with automated best-model selection.",
+      "Generated visual analytics including feature correlation heatmaps and price trajectory comparisons, containerized with Docker for reproducible execution.",
+    ],
+    github: "https://github.com/Advayaverma/Stock-Analysis-Prediction",
     demo: "",
   },
   {
