@@ -5,7 +5,7 @@ export const profile = {
   tagline: "Final-year Computer Science student · ML, Backend & Frontend",
   summary:
     "Final-year Computer Science undergraduate at VIT-AP with hands-on experience in machine learning, NLP, backend development, and frontend engineering, including an AI Engineering internship at IDM Valley building LLM-powered features and RAG pipelines. Proficient in Python, REST APIs, and cloud-native tools including Docker and FastAPI, with experience building responsive, interactive interfaces using React, HTML, CSS, and JavaScript. Oracle-certified Generative AI professional with a strong foundation in data structures, algorithms, and software engineering principles. Seeking software engineering or ML roles to apply skills in real-world AI, backend, and full-stack projects.",
-  resumeFile: "/Advaya_Verma_resume_v4.pdf",
+  resumeFile: "/Advaya_Verma_resume.pdf",
   links: {
     linkedin: "http://www.linkedin.com/in/advaya-verma-b49249285",
     github: "https://github.com/Advayaverma",
@@ -25,35 +25,83 @@ export const navLinks = [
 
 export const skills = {
   Languages: ["Python", "C", "C++", "Java", "R", "JavaScript"],
-  "Web & Backend": ["HTML", "CSS", "React", "FastAPI", "REST APIs"],
+  "Web & Backend": [
+    "HTML",
+    "CSS",
+    "React",
+    "Supabase",
+    "PostgreSQL",
+    "FastAPI",
+    "REST APIs",
+  ],
   "ML / AI": [
     "Scikit-learn",
     "NumPy",
     "Pandas",
     "Sentence Transformers",
     "FAISS",
-    "LLMs",
+    "NLP",
     "RAG",
-    "Prompt Engineering",
+    "LLMs",
+    "Generative AI",
+  ],
+  "AI Concepts": [
+    "Embeddings",
+    "Semantic Search",
+    "Vector Databases",
+    "Clustering",
   ],
   "Tools & Platforms": [
     "Docker",
     "Git",
     "GitHub",
+    "Vercel",
     "MySQL",
     "Oracle Cloud Infrastructure",
   ],
-  Concepts: [
-    "NLP",
-    "Semantic Search",
-    "Clustering",
+  "Software Engineering": [
     "Agile/Scrum",
-    "Software Engineering",
+    "Software Development",
     "UML",
   ],
 };
 
 export const projects = [
+  {
+    title: "Digital Library Cloud Platform",
+    tech: [
+      "React 18",
+      "Vite",
+      "Supabase",
+      "PostgreSQL",
+      "Docker",
+      "GitHub Actions",
+    ],
+    description:
+      "A cloud-native digital library platform migrated from a static site to a modern React 18 & Vite SPA, featuring ACID-compliant concurrency control, GoTrue RBAC authentication, and automated CI/CD.",
+    highlights: [
+      "Architected & Migrated Full-Stack Platform: Migrated legacy static application into a modern React 18 & Vite SPA with React Router, implementing modular component architecture, Context API state management, and real-time catalog search.",
+      "Database & Concurrency Engineering: Built a relational backend on Supabase (PostgreSQL) with partial unique indexes (unique_active_book_borrowing) to eliminate double-borrow race conditions across concurrent users.",
+      "Authentication & Role-Based Access Control (RBAC): Integrated Supabase GoTrue Auth and database Row-Level Security (RLS), supporting dual-identifier login (Username/Email via PL/pgSQL RPC) and route-level protection for members and admins.",
+      "Testing & Automated CI/CD: Established zero-dependency automated unit/service test suites (node:test), multi-stage Docker containerization (Alpine/Nginx), and GitHub Actions CI pipelines with edge deployment on Vercel.",
+    ],
+    github: "https://github.com/Advayaverma/Digital-library",
+    demo: "https://digital-library-opal.vercel.app/",
+  },
+  {
+    title: "Semantic Search System",
+    tech: ["Python", "FastAPI", "FAISS", "Docker", "NLP", "Scikit-learn"],
+    description:
+      "A semantic search pipeline using Sentence Transformers and FAISS with GMM-based fuzzy clustering and a semantic cache layer for sub-100ms retrieval.",
+    highlights: [
+      "Built a semantic search pipeline using Sentence Transformers (MiniLM-L6-v2) and FAISS, achieving sub-100ms nearest-neighbor retrieval over 18,000+ documents from the 20 Newsgroups dataset.",
+      "Implemented Gaussian Mixture Model (GMM)-based fuzzy clustering to assign probabilistic multi-topic memberships to documents, improving retrieval relevance for ambiguous queries.",
+      "Designed a semantic cache layer to detect similar queries and reuse results, reducing redundant API calls and cutting average response time by ~40%.",
+      "Exposed REST API endpoints via FastAPI and containerized the full application using Docker, enabling one-command portable deployment.",
+    ],
+    github: "https://github.com/Advayaverma/Semantic-Search-System",
+    demo: "",
+  },
   {
     title: "Production-Style RAG Knowledge Assistant",
     tech: [
@@ -92,20 +140,6 @@ export const projects = [
     demo: "",
   },
   {
-    title: "Semantic Search System",
-    tech: ["Python", "FastAPI", "FAISS", "Docker", "NLP", "Scikit-learn"],
-    description:
-      "A semantic search pipeline using Sentence Transformers and FAISS with GMM-based fuzzy clustering and a semantic cache layer for sub-100ms retrieval.",
-    highlights: [
-      "Built a semantic search pipeline using Sentence Transformers (MiniLM-L6-v2) and FAISS, achieving sub-100ms nearest-neighbor retrieval over 18,000+ documents from the 20 Newsgroups dataset.",
-      "Implemented Gaussian Mixture Model (GMM)-based fuzzy clustering to assign probabilistic multi-topic memberships to documents, improving retrieval relevance for ambiguous queries.",
-      "Designed a semantic cache layer to detect similar queries and reuse results, reducing redundant API calls and cutting average response time by ~40%.",
-      "Exposed REST API endpoints via FastAPI and containerized the full application using Docker, enabling one-command portable deployment.",
-    ],
-    github: "https://github.com/Advayaverma/Semantic-Search-System",
-    demo: "",
-  },
-  {
     title: "Stock Analysis & Price Prediction",
     tech: [
       "Python",
@@ -141,19 +175,6 @@ export const projects = [
     github: "https://github.com/Advayaverma/Chemical-Risk-Analyzer",
     demo: "",
   },
-  {
-    title: "Digital Library Web App",
-    tech: ["HTML", "CSS", "JavaScript"],
-    description:
-      "A fully client-side digital library with JSON-based local storage, responsive UI, and real-time search — deployed on GitHub Pages.",
-    highlights: [
-      "Developed a fully client-side digital library system with JSON-based local storage, supporting CRUD operations (add, search, update, delete) for book records.",
-      "Built a responsive UI with real-time search and filtering, enabling efficient book management without a backend dependency.",
-      "Deployed as a GitHub Pages static site, demonstrating end-to-end ownership from development to deployment.",
-    ],
-    github: "https://github.com/Advayaverma/Digital-library.git",
-    demo: "https://advayaverma.github.io/Digital-library/",
-  },
 ];
 
 export const experience = [
@@ -171,12 +192,11 @@ export const experience = [
       "Vector Databases",
     ],
     highlights: [
-      "Assisted in building and deploying AI/ML models for real-world applications.",
-      "Developed AI-powered features using Large Language Models (LLMs) and Generative AI.",
-      "Collected, cleaned, and preprocessed datasets for model training and evaluation.",
-      "Wrote clean, efficient, and well-documented Python code following best practices.",
-      "Integrated AI models with web applications and backend APIs.",
-      "Experimented with prompt engineering, embeddings, Retrieval-Augmented Generation (RAG), and vector databases.",
+      "Applied semantic search and information-retrieval concepts from prior project work to develop and experiment with Retrieval-Augmented Generation (RAG) workflows for LLM-based applications.",
+      "Worked with text embeddings, document retrieval, and vector databases to build retrieval pipelines for supplying relevant context to language models.",
+      "Experimented with prompt engineering and context integration to improve the quality and relevance of LLM-generated responses.",
+      "Used Python for data preprocessing, retrieval workflow development, experimentation, and integration of AI components with application backends.",
+      "Created technical documentation covering RAG workflows, implementation approaches, configuration, and usage guidelines to support development and knowledge sharing.",
     ],
   },
 ];
