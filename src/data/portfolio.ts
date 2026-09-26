@@ -2,9 +2,9 @@ export const profile = {
   name: "Advaya Verma",
   email: "advaya2208@gmail.com",
   phone: "+91 9319200479",
-  tagline: "Final-year Computer Science student · ML, Backend & Frontend",
+  tagline: "Final-year Computer Science student · Data Engineering, ML & Backend",
   summary:
-    "Final-year Computer Science undergraduate at VIT-AP with hands-on experience in machine learning, NLP, backend development, and frontend engineering, including an AI Engineering internship at IDM Valley building LLM-powered features and RAG pipelines. Proficient in Python, REST APIs, and cloud-native tools including Docker and FastAPI, with experience building responsive, interactive interfaces using React, HTML, CSS, and JavaScript. Oracle-certified Generative AI professional with a strong foundation in data structures, algorithms, and software engineering principles. Seeking software engineering or ML roles to apply skills in real-world AI, backend, and full-stack projects.",
+    "Final-year Computer Science undergraduate at VIT-AP with hands-on experience in data engineering, machine learning, NLP, backend development, and cloud-native systems, including an AI Engineering internship at IDM Valley building LLM-powered features and RAG pipelines. Experienced in designing enterprise Medallion Lakehouses with PySpark and Delta Lake, dimensional data modeling (Kimball Star Schema, SCD Type 2), and automated data quality frameworks. Proficient in Python, SQL, REST APIs, Docker, and Azure cloud ecosystems (ADF, Databricks, ADLS Gen2). Oracle-certified Generative AI professional with a strong foundation in data structures, algorithms, and software engineering principles. Seeking data engineering, software engineering, or ML roles to deliver scalable data and AI solutions.",
   resumeFile: "/Advaya_Verma_resume_v5.pdf",
   links: {
     linkedin: "http://www.linkedin.com/in/advaya-verma-b49249285",
@@ -24,15 +24,30 @@ export const navLinks = [
 ];
 
 export const skills = {
-  Languages: ["Python", "C", "C++", "Java", "R", "JavaScript"],
-  "Web & Backend": [
-    "HTML",
-    "CSS",
-    "React",
-    "Supabase",
-    "PostgreSQL",
-    "FastAPI",
-    "REST APIs",
+  "Data Engineering": [
+    "PySpark",
+    "Delta Lake",
+    "Medallion Architecture",
+    "Kimball Star Schema",
+    "SCD Type 2",
+    "ETL / ELT Pipelines",
+    "Data Quality & Quarantine",
+    "ACID Transactions",
+    "Incremental Processing / CDC",
+    "Time Travel & Schema Evolution",
+  ],
+  Languages: ["Python", "SQL", "C", "C++", "Java", "R", "JavaScript"],
+  "Cloud & DevOps": [
+    "Microsoft Azure",
+    "Azure Data Factory (ADF)",
+    "Azure Databricks",
+    "ADLS Gen2",
+    "Docker",
+    "Docker Compose",
+    "GitHub Actions",
+    "CI/CD",
+    "Terraform IaC",
+    "Vercel",
   ],
   "ML / AI": [
     "Scikit-learn",
@@ -44,29 +59,53 @@ export const skills = {
     "RAG",
     "LLMs",
     "Generative AI",
-  ],
-  "AI Concepts": [
-    "Embeddings",
-    "Semantic Search",
     "Vector Databases",
-    "Clustering",
+    "Semantic Search",
   ],
-  "Tools & Platforms": [
-    "Docker",
-    "Git",
-    "GitHub",
-    "Vercel",
+  "Web & Backend": [
+    "FastAPI",
+    "PostgreSQL",
+    "REST APIs",
+    "React",
+    "Supabase",
     "MySQL",
-    "Oracle Cloud Infrastructure",
+    "HTML",
+    "CSS",
   ],
   "Software Engineering": [
+    "Unit & Integration Testing",
+    "Data Modeling",
     "Agile/Scrum",
-    "Software Development",
+    "Software Architecture",
     "UML",
   ],
 };
 
 export const projects = [
+  {
+    title: "Retail Data Engineering Pipeline — End-to-End Lakehouse Analytics",
+    tech: [
+      "Python",
+      "PySpark",
+      "Delta Lake",
+      "PostgreSQL",
+      "Azure Databricks",
+      "Azure Data Factory",
+      "ADLS Gen2",
+      "Docker",
+      "GitHub Actions",
+    ],
+    description:
+      "An enterprise Medallion Lakehouse pipeline (Bronze → Silver → Gold) processing 105k+ transactional records, CRM masters, and REST API forex feeds using PySpark and Delta Lake ACID transactions, Kimball Star Schema modeling, automated quarantine validation, and Azure cloud integration.",
+    highlights: [
+      "Architected an enterprise Medallion Lakehouse pipeline (Bronze → Silver → Gold) ingesting 105k+ transactional records, CRM masters, and REST API forex feeds using Python, PySpark, and Delta Lake ACID transactions.",
+      "Engineered an automated Data Quality & Quarantine framework enforcing atomic validation rules (nulls, ranges, timestamps, foreign key referential integrity), isolating 1,100 defective records (1.05%) with defect codes and achieving a 98.95% clean data SLA pass rate.",
+      "Implemented a Kimball Dimensional Star Schema with SCD Type 2 for customer demographics and segment tracking (10,500 active + 249 historical audit records) and constructed fact_sales across 104k+ transactions with surrogate keys.",
+      "Designed Day-2 incremental processing with Delta Lake MERGE and schema evolution, achieving sub-minute DAG orchestration across 7 pipeline stages, validated by 77 automated unit/integration tests, Dockerized with PostgreSQL healthchecks, and mapped to Azure Data Factory & ADLS Gen2.",
+    ],
+    github: "https://github.com/Advayaverma/retail-data-engineering",
+    demo: "",
+  },
   {
     title: "Digital Library Cloud Platform",
     tech: [
