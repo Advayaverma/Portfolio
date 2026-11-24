@@ -95,6 +95,28 @@ export const projects = [
     demo: "",
   },
   {
+    title: "GraphMind — Grounded Knowledge-Graph Q&A (MLH Hacktober 3rd Place)",
+    tech: [
+      "Node.js",
+      "Express",
+      "Gemini API",
+      "Knowledge Graphs",
+      "vis-network",
+      "BFS Traversal",
+      "REST APIs",
+    ],
+    description:
+      "A graph-native reasoning engine built in a team of 3 for MLH Hacktoberfest (ranked 3rd overall) that extracts structured knowledge graphs from multi-format documents to answer complex multi-hop queries with exact citations and zero hallucinations.",
+    highlights: [
+      "Collaborated in a 3-person team for MLH Hacktoberfest to design and build a graph-native Q&A engine, earning 3rd place overall in the hackathon.",
+      "Engineered an in-memory knowledge graph engine with document chunking (up to 25 MB PDFs) and Gemini-powered extraction of typed entities and directed relationships with canonical Jaccard deduplication.",
+      "Implemented multi-hop reasoning using Breadth-First Search (BFS) traversal, shortest-path calculation, automated cross-document conflict/contradiction detection, and strict citation-backed hallucination abstention.",
+      "Built an interactive visual canvas using vis-network featuring dynamic color-coded nodes, animated path traversal highlights, and an end-to-end 20-query enterprise benchmark suite.",
+    ],
+    github: "https://github.com/AdityaV33/GraphMind-Hacktober",
+    demo: "https://graphmind-hacktober.onrender.com/",
+  },
+  {
     title: "Retail Data Engineering Pipeline — End-to-End Lakehouse Analytics",
     tech: [
       "Python",
