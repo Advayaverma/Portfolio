@@ -72,6 +72,29 @@ export const skills = {
 
 export const projects = [
   {
+    title: "Explainable Multimodal Clinical Decision Support System (AI-CDSS)",
+    tech: [
+      "Python",
+      "FastAPI",
+      "React",
+      "PyTorch",
+      "XGBoost",
+      "FAISS",
+      "Docker",
+    ],
+    description:
+      "A full-stack, on-premise clinical decision support platform unifying EHR data, 12-lead ECGs, brain MRI, lab reports, and guideline retrieval with physician-in-the-loop explainability and automated rule verification.",
+    highlights: [
+      "Led a team of 4 members to build a full-stack, on-premise clinical decision support platform (FastAPI, React 18, Docker) unifying EHR data, 12-lead ECGs, brain MRI, lab reports, and guideline retrieval, with JWT role-based access and a physician-in-the-loop design.",
+      "Developed a 30-day diabetic readmission XGBoost model on 101,763 encounters; cost-sensitive threshold tuning cut false alarms by 60.6% at 84.1% sensitivity, with TreeSHAP, LIME, and a counterfactual what-if sandbox for explainability.",
+      "Implemented an 8-stage ECG image-to-signal pipeline with a ResNet-1D classifier (0.92 macro AUROC on PTB-XL), a ViT-Base/16 MRI classifier (95.27% accuracy), and 3D MONAI tumor segmentation with Monte Carlo Dropout uncertainty (WT Dice 0.90).",
+      "Built FAISS-based RAG guideline retrieval (MiniLM-L6-v2) returning verbatim ADA/ACC-AHA text with source citations, plus a deterministic 14-chemistry lab rule engine with OCR report extraction, backed by 118+ automated tests.",
+    ],
+    github:
+      "https://github.com/Advayaverma/Multimodal-AI-Clinical-Decision-Support-System-for-Doctors",
+    demo: "",
+  },
+  {
     title: "Retail Data Engineering Pipeline — End-to-End Lakehouse Analytics",
     tech: [
       "Python",
