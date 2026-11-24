@@ -24,20 +24,6 @@ export const navLinks = [
 ];
 
 export const skills = {
-  "Data Engineering": [
-    "PySpark",
-    "Delta Lake",
-    "Medallion Architecture",
-    "Kimball Star Schema",
-    "SCD Type 2",
-    "ETL / ELT Pipelines",
-    "Data Quality & Quarantine",
-    "ACID Transactions",
-    "Incremental Processing / CDC",
-    "Time Travel & Schema Evolution",
-  ],
-  Languages: ["Python", "SQL", "C", "C++", "Java", "R", "JavaScript"],
-  DevOps: ["Docker", "GitHub Actions", "CI/CD", "Vercel"],
   "ML / AI": [
     "Scikit-learn",
     "NumPy",
@@ -61,6 +47,18 @@ export const skills = {
     "HTML",
     "CSS",
   ],
+  "Data Engineering": [
+    "PySpark",
+    "Delta Lake",
+    "Medallion Architecture",
+    "Kimball Star Schema",
+    "SCD Type 2",
+    "ETL / ELT Pipelines",
+    "Data Quality & Quarantine",
+    "ACID Transactions",
+    "Incremental Processing / CDC",
+    "Time Travel & Schema Evolution",
+  ],
   "Software Engineering": [
     "Unit & Integration Testing",
     "Data Modeling",
@@ -68,6 +66,8 @@ export const skills = {
     "Software Architecture",
     "UML",
   ],
+  DevOps: ["Docker", "GitHub Actions", "CI/CD", "Vercel"],
+  Languages: ["Python", "SQL", "C", "C++", "Java", "R", "JavaScript"],
 };
 
 export const projects = [
