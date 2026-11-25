@@ -17,7 +17,7 @@ export function Experience() {
             <FadeIn key={`${item.company}-${item.period}`} delay={index * 0.1}>
               <article className="glass-card rounded-2xl p-6 transition-transform hover:-translate-y-0.5 md:p-8">
                 <div className="mb-4 flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500/20 to-violet-500/20 text-cyan-400">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-red-600/25 to-orange-500/25 text-orange-400">
                     <HiBriefcase size={20} />
                   </div>
                   <div className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
@@ -25,7 +25,7 @@ export function Experience() {
                       <h3 className="text-lg font-semibold text-zinc-100">
                         {item.role}
                       </h3>
-                      <p className="mt-1 text-sm text-cyan-400">{item.company}</p>
+                      <p className="mt-1 text-sm text-orange-400">{item.company}</p>
                       {item.location && (
                         <p className="mt-1 text-sm text-zinc-500">{item.location}</p>
                       )}
@@ -42,7 +42,7 @@ export function Experience() {
                       key={highlight.slice(0, 40)}
                       className="flex gap-2 text-sm text-zinc-400"
                     >
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-400" />
                       <span>{highlight}</span>
                     </li>
                   ))}

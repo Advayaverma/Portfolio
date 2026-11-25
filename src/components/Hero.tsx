@@ -13,7 +13,7 @@ export function Hero() {
     >
       <div className="mx-auto max-w-4xl text-center">
         <motion.p
-          className="mb-4 text-sm font-medium uppercase tracking-widest text-cyan-400"
+          className="font-racing mb-4 text-sm font-semibold uppercase tracking-widest text-orange-400"
           initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -22,7 +22,7 @@ export function Hero() {
         </motion.p>
 
         <motion.h1
-          className="text-5xl font-bold tracking-tight md:text-7xl"
+          className="font-racing text-5xl font-extrabold tracking-tight md:text-7xl"
           initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
@@ -48,14 +48,14 @@ export function Hero() {
           <button
             type="button"
             onClick={() => scrollToSection("projects")}
-            className="w-full rounded-lg bg-gradient-to-r from-cyan-500 to-violet-500 px-8 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:w-auto"
+            className="w-full rounded-lg bg-gradient-to-r from-red-600 to-orange-500 px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-red-600/20 transition-opacity hover:opacity-90 sm:w-auto"
           >
             View Projects
           </button>
           <a
             href={profile.resumeFile}
             download
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-8 py-3 text-sm font-semibold text-zinc-200 transition-colors hover:border-cyan-400/50 hover:text-cyan-400 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-orange-500/20 bg-white/5 px-8 py-3 text-sm font-semibold text-zinc-200 transition-colors hover:border-orange-400/60 hover:text-orange-400 sm:w-auto"
           >
             <HiDownload size={18} />
             Download Resume

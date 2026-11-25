@@ -18,13 +18,31 @@ html {
   }
 }
 
+:root {
+  --racing-red: #e11d2e;
+  --hot-orange: #f97316;
+  --lightning-yellow: #facc15;
+  --asphalt: #111113;
+  --pit-lane: #1a1a1e;
+  --chrome: #d4d4d8;
+  --exhaust: #71717a;
+}
+
 body {
   margin: 0;
   font-family: "Inter", system-ui, sans-serif;
-  background-color: #09090b;
-  color: #d4d4d8;
+  background-color: var(--asphalt);
+  color: var(--chrome);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.font-racing {
+  font-family: "Orbitron", system-ui, sans-serif;
+}
+
+.font-number {
+  font-family: "Racing Sans One", "Orbitron", system-ui, sans-serif;
 }
 
 #root {
@@ -32,20 +50,22 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #22d3ee, #a78bfa);
+  background: linear-gradient(135deg, #e11d2e, #f97316, #facc15);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(26, 26, 30, 0.75);
+  border: 1px solid rgba(249, 115, 22, 0.16);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(12px);
 }
 
 .hero-glow {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34, 211, 238, 0.15), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(167, 139, 250, 0.1), transparent);
+    radial-gradient(ellipse 80% 50% at 50% -15%, rgba(225, 29, 46, 0.22), transparent),
+    radial-gradient(ellipse 60% 45% at 85% 65%, rgba(249, 115, 22, 0.14), transparent),
+    radial-gradient(ellipse 50% 35% at 15% 75%, rgba(250, 204, 21, 0.08), transparent);
 }

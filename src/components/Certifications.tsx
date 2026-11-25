@@ -16,7 +16,7 @@ export function Certifications() {
           {certifications.map((cert, index) => (
             <FadeIn key={cert.title} delay={index * 0.08}>
               <div className="glass-card flex items-start gap-4 rounded-2xl p-6 transition-transform hover:-translate-y-0.5 md:p-8">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 text-cyan-400">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-red-600/25 to-orange-500/25 text-orange-400">
                   <HiBadgeCheck size={24} />
                 </div>
                 <div>

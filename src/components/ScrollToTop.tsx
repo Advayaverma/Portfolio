@@ -17,7 +17,7 @@ export function ScrollToTop() {
     <button
       type="button"
       onClick={() => scrollToSection("hero")}
-      className="fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-zinc-900/90 text-zinc-300 shadow-lg backdrop-blur-sm transition-all hover:border-cyan-400/50 hover:text-cyan-400"
+      className="fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-orange-500/20 bg-zinc-900/90 text-zinc-300 shadow-lg backdrop-blur-sm transition-all hover:border-orange-400/60 hover:text-orange-400"
       aria-label="Scroll to top"
     >
       <HiArrowUp size={20} />

@@ -28,7 +28,7 @@ export function Skills() {
                 onClick={() => setActiveCategory(category)}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
                   activeCategory === category
-                    ? "bg-gradient-to-r from-cyan-500/20 to-violet-500/20 text-cyan-400 ring-1 ring-cyan-400/30"
+                    ? "bg-gradient-to-r from-red-600/25 to-orange-500/25 text-orange-400 ring-1 ring-orange-400/40"
                     : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
                 }`}
               >
@@ -45,7 +45,7 @@ export function Skills() {
               {activeSkills.map((skill, index) => (
                 <motion.span
                   key={skill}
-                  className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 transition-colors hover:border-cyan-400/30 hover:text-cyan-300"
+                  className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 transition-colors hover:border-orange-400/40 hover:text-orange-300"
                   initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3, delay: index * 0.04 }}
@@ -60,7 +60,7 @@ export function Skills() {
             {categories.map((category, catIndex) => (
               <FadeIn key={category} delay={catIndex * 0.08}>
                 <div className="glass-card h-full rounded-2xl p-6 transition-transform hover:-translate-y-1">
-                  <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-cyan-400">
+                  <h3 className="font-racing mb-3 text-sm font-semibold uppercase tracking-wide text-orange-400">
                     {category}
                   </h3>
                   <div className="flex flex-wrap gap-2">

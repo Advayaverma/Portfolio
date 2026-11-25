@@ -45,14 +45,14 @@ export function Contact() {
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <a
                 href={`mailto:${profile.email}`}
-                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-3 text-sm text-zinc-300 transition-colors hover:border-cyan-400/50 hover:text-cyan-400"
+                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-3 text-sm text-zinc-300 transition-colors hover:border-orange-400/50 hover:text-orange-400"
               >
                 <HiMail size={18} />
                 {profile.email}
               </a>
               <a
                 href={`tel:${profile.phone.replace(/\s/g, "")}`}
-                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-3 text-sm text-zinc-300 transition-colors hover:border-cyan-400/50 hover:text-cyan-400"
+                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-5 py-3 text-sm text-zinc-300 transition-colors hover:border-orange-400/50 hover:text-orange-400"
               >
                 <HiPhone size={18} />
                 {profile.phone}
@@ -67,7 +67,7 @@ export function Contact() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-400 transition-all hover:-translate-y-0.5 hover:border-cyan-400/50 hover:text-cyan-400"
+                    className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-400 transition-all hover:-translate-y-0.5 hover:border-orange-400/50 hover:text-orange-400"
                     aria-label={label}
                   >
                     <Icon size={22} />

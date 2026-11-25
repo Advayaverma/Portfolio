@@ -28,7 +28,7 @@ export function Education() {
                       <h3 className="text-lg font-semibold text-zinc-100">
                         {item.institution}
                       </h3>
-                      <p className="mt-1 text-sm text-cyan-400">{item.degree}</p>
+                      <p className="mt-1 text-sm text-orange-400">{item.degree}</p>
                       {item.details && (
                         <p className="mt-1 text-sm text-zinc-400">
                           {item.details}
@@ -47,7 +47,7 @@ export function Education() {
                         onClick={() =>
                           setExpandedIndex(isExpanded ? null : index)
                         }
-                        className="mt-4 flex items-center gap-1 text-sm text-zinc-400 transition-colors hover:text-cyan-400"
+                        className="mt-4 flex items-center gap-1 text-sm text-zinc-400 transition-colors hover:text-orange-400"
                       >
                         Relevant Coursework
                         <HiChevronDown

@@ -14,12 +14,12 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-zinc-950/80 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-orange-500/15 bg-[#111113]/85 backdrop-blur-md">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:px-6">
         <button
           type="button"
           onClick={() => scrollToSection("hero")}
-          className="text-lg font-semibold text-zinc-100 transition-colors hover:text-cyan-400"
+          className="font-racing text-lg font-bold tracking-wider text-zinc-100 transition-colors hover:text-orange-400"
         >
           AV
         </button>
@@ -32,7 +32,7 @@ export function Navbar() {
                 onClick={() => handleNavClick(link.id)}
                 className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                   activeSection === link.id
-                    ? "text-cyan-400"
+                    ? "text-orange-400"
                     : "text-zinc-400 hover:text-zinc-100"
                 }`}
               >
@@ -45,7 +45,7 @@ export function Navbar() {
         <a
           href={profile.resumeFile}
           download
-          className="hidden rounded-lg bg-gradient-to-r from-cyan-500 to-violet-500 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 md:inline-block"
+          className="hidden rounded-lg bg-gradient-to-r from-red-600 to-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-red-600/20 transition-opacity hover:opacity-90 md:inline-block"
         >
           Resume
         </a>
@@ -61,7 +61,7 @@ export function Navbar() {
       </nav>
 
       {menuOpen && (
-        <div className="border-t border-white/5 bg-zinc-950/95 px-4 py-4 md:hidden">
+        <div className="border-t border-orange-500/15 bg-[#111113]/95 px-4 py-4 md:hidden">
           <ul className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <li key={link.id}>
@@ -70,7 +70,7 @@ export function Navbar() {
                   onClick={() => handleNavClick(link.id)}
                   className={`w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                     activeSection === link.id
-                      ? "bg-white/5 text-cyan-400"
+                      ? "bg-white/5 text-orange-400"
                       : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100"
                   }`}
                 >
@@ -82,7 +82,7 @@ export function Navbar() {
               <a
                 href={profile.resumeFile}
                 download
-                className="mt-2 block rounded-lg bg-gradient-to-r from-cyan-500 to-violet-500 px-3 py-2 text-center text-sm font-medium text-white"
+                className="mt-2 block rounded-lg bg-gradient-to-r from-red-600 to-orange-500 px-3 py-2 text-center text-sm font-medium text-white"
               >
                 Download Resume
               </a>
