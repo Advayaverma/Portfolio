@@ -2,6 +2,7 @@ import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { navLinks, profile } from "../data/portfolio";
 import { scrollToSection, useActiveSection } from "../hooks/useActiveSection";
+import ShinyText from "./reactbits/ShinyText";
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,9 +20,15 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => scrollToSection("hero")}
-          className="font-racing text-lg font-bold tracking-wider text-zinc-100 transition-colors hover:text-orange-400"
+          className="font-racing text-lg font-bold tracking-wider transition-transform hover:scale-105"
+          aria-label="Scroll to top"
         >
-          AV
+          <ShinyText
+            text="AV"
+            color="#f4f4f5"
+            shineColor="#f97316"
+            speed={2.5}
+          />
         </button>
 
         <ul className="hidden items-center gap-1 md:flex">

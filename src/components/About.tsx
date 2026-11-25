@@ -1,6 +1,7 @@
 import { profile } from "../data/portfolio";
 import { FadeIn } from "./FadeIn";
 import { SectionHeading } from "./SectionHeading";
+import SpotlightCard from "./reactbits/SpotlightCard";
 
 export function About() {
   return (
@@ -8,11 +9,14 @@ export function About() {
       <div className="mx-auto max-w-6xl">
         <SectionHeading title="About Me" subtitle="Who I am and what I do" />
         <FadeIn>
-          <div className="glass-card mx-auto max-w-3xl rounded-2xl p-8 md:p-10">
+          <SpotlightCard
+            spotlightColor="rgba(249, 115, 22, 0.22)"
+            className="glass-card mx-auto max-w-3xl rounded-2xl p-8 md:p-10"
+          >
             <p className="text-center text-base leading-relaxed text-zinc-300 md:text-lg">
               {profile.summary}
             </p>
-          </div>
+          </SpotlightCard>
         </FadeIn>
       </div>
     </section>

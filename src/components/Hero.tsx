@@ -2,6 +2,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import { HiDownload } from "react-icons/hi";
 import { profile } from "../data/portfolio";
 import { scrollToSection } from "../hooks/useActiveSection";
+import Aurora from "./reactbits/Aurora";
+import SplitText from "./reactbits/SplitText";
+import DecryptedText from "./reactbits/DecryptedText";
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
@@ -9,9 +12,21 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="hero-glow relative flex min-h-screen items-center justify-center px-4 pt-20 md:px-6"
+      className="hero-glow relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-20 md:px-6"
     >
-      <div className="mx-auto max-w-4xl text-center">
+      {!prefersReducedMotion && (
+        <div className="pointer-events-none absolute inset-0 opacity-60">
+          <Aurora
+            colorStops={["#E11D2E", "#F97316", "#FACC15"]}
+            blend={0.55}
+            amplitude={1.0}
+            speed={0.5}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#111113]" />
+        </div>
+      )}
+
+      <div className="relative z-10 mx-auto max-w-4xl text-center">
         <motion.p
           className="font-racing mb-4 text-sm font-semibold uppercase tracking-widest text-orange-400"
           initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
@@ -21,23 +36,40 @@ export function Hero() {
           Portfolio
         </motion.p>
 
-        <motion.h1
-          className="font-racing text-5xl font-extrabold tracking-tight md:text-7xl"
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          <span className="gradient-text">{profile.name}</span>
-        </motion.h1>
+        {prefersReducedMotion ? (
+          <h1 className="font-racing text-5xl font-extrabold tracking-tight md:text-7xl">
+            <span className="gradient-text">{profile.name}</span>
+          </h1>
+        ) : (
+          <SplitText
+            text={profile.name}
+            tag="h1"
+            trigger="load"
+            effect="rise"
+            splitType="chars"
+            delay={40}
+            duration={0.7}
+            color="#ffffff"
+            accentColor="#f97316"
+            className="font-racing text-5xl font-extrabold tracking-tight drop-shadow-[0_4px_24px_rgba(225,29,46,0.35)] md:text-7xl"
+          />
+        )}
 
-        <motion.p
-          className="mt-6 text-lg text-zinc-400 md:text-xl"
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          {profile.tagline}
-        </motion.p>
+        <div className="mt-6">
+          {prefersReducedMotion ? (
+            <p className="text-lg text-zinc-300 md:text-xl">{profile.tagline}</p>
+          ) : (
+            <DecryptedText
+              text={profile.tagline}
+              animateOn="view"
+              sequential
+              speed={35}
+              scrambleColor="#f97316"
+              className="text-lg text-zinc-300 md:text-xl"
+              parentClassName="text-lg md:text-xl"
+            />
+          )}
+        </div>
 
         <motion.div
           className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
