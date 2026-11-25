@@ -33,36 +33,35 @@ export const PIT_STOPS: PitStopMeta[] = [
     badge: "START LINE",
     label: "Ignition",
     progress: 0.04,
-    positionClass: "bottom-14 left-4 right-4 md:bottom-10 md:left-6 md:right-auto",
+    positionClass: "items-end justify-start pb-10 md:pb-4",
   },
   {
     id: "about",
     badge: "PIT STOP 01",
     label: "About & Skills",
     progress: 0.26,
-    positionClass: "top-20 left-4 right-4 md:top-24 md:left-6 md:right-auto",
+    positionClass: "items-start justify-start pt-16 md:pt-18",
   },
   {
     id: "projects",
     badge: "THE GARAGE",
     label: "Projects",
     progress: 0.5,
-    positionClass: "bottom-14 left-4 right-4 md:bottom-10 md:left-auto md:right-16",
+    positionClass: "items-end justify-end pb-10 md:pb-4 md:pr-10",
   },
   {
     id: "record",
     badge: "TRACK RECORD",
     label: "Experience",
     progress: 0.74,
-    positionClass: "top-20 left-4 right-4 md:top-24 md:left-auto md:right-16",
+    positionClass: "items-start justify-end pt-16 md:pt-18 md:pr-10",
   },
   {
     id: "contact",
     badge: "FINISH LINE",
     label: "Contact",
     progress: 0.94,
-    positionClass:
-      "bottom-14 left-4 right-4 md:bottom-12 md:left-1/2 md:right-auto md:-translate-x-1/2",
+    positionClass: "items-end justify-center pb-10 md:pb-6",
   },
 ];
 
@@ -89,18 +88,24 @@ export function PitStopOverlay({
 
   return (
     <div
-      className={`pointer-events-none fixed z-30 transition-all duration-500 md:w-[430px] ${stop.positionClass}`}
+      className={`pointer-events-none fixed inset-4 z-30 flex md:inset-6 ${stop.positionClass}`}
     >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={stop.id}
-          initial={{ opacity: 0, y: 18, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -12, scale: 0.98 }}
-          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          className="pointer-events-auto rounded-2xl border border-orange-500/30 bg-[#141418]/90 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.65)] backdrop-blur-xl"
-          data-pit-overlay="true"
-        >
+      <motion.div
+        layout
+        transition={{
+          layout: { type: "spring", stiffness: 150, damping: 24 },
+        }}
+        className="pointer-events-auto w-full rounded-2xl border border-orange-500/30 bg-[#141418]/90 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.65)] backdrop-blur-xl md:w-[430px]"
+        data-pit-overlay="true"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={stop.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          >
           {/* Pit-board Header */}
           <div className="mb-3 flex items-center justify-between border-b border-orange-500/20 pb-2.5">
             <span className="font-number rounded bg-red-600/20 px-2 py-0.5 text-[11px] tracking-widest text-orange-300 ring-1 ring-orange-500/35">
@@ -158,13 +163,13 @@ export function PitStopOverlay({
 
           {/* STOP 1: ABOUT & SKILLS */}
           {stop.id === "about" && (
-            <div className="space-y-3">
+            <div className="space-y-4">
               <p className="line-clamp-4 text-xs leading-relaxed text-zinc-300">
                 {profile.summary}
               </p>
 
-              <div className="pt-1">
-                <div className="mb-2 flex flex-wrap gap-1.5">
+              <div className="border-t border-white/10 pt-3">
+                <div className="flex flex-wrap gap-1.5">
                   {skillCategories.map((cat) => (
                     <button
                       key={cat}
@@ -180,11 +185,12 @@ export function PitStopOverlay({
                     </button>
                   ))}
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+
+                <div className="mt-3.5 border-t border-white/5 pt-3 flex flex-wrap gap-2">
                   {skills[activeSkillCat].slice(0, 8).map((skill) => (
                     <span
                       key={skill}
-                      className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-zinc-300"
+                      className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-zinc-200"
                     >
                       {skill}
                     </span>
@@ -434,8 +440,9 @@ export function PitStopOverlay({
               </div>
             </div>
           )}
-        </motion.div>
-      </AnimatePresence>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }

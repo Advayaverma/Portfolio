@@ -23,7 +23,7 @@ export function Skills() {
         <SkillSphere3D />
 
         <FadeIn>
-          <div className="mb-8 flex flex-wrap justify-center gap-2">
+          <div className="mb-10 flex flex-wrap justify-center gap-2.5">
             {categories.map((category) => (
               <button
                 key={category}
@@ -41,10 +41,10 @@ export function Skills() {
           </div>
 
           <div className="glass-card rounded-2xl p-6 md:p-8">
-            <h3 className="mb-4 text-lg font-semibold text-zinc-100">
+            <h3 className="font-racing mb-4 border-b border-white/10 pb-3 text-lg font-semibold text-zinc-100">
               {activeCategory}
             </h3>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 pt-1">
               {activeSkills.map((skill, index) => (
                 <motion.span
                   key={skill}
