@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { Html, Sky } from "@react-three/drei";
 import * as THREE from "three";
 import { GlbModel } from "./GlbModel";
 import { RaceCar95 } from "./RaceCar95";
@@ -35,6 +35,34 @@ const CACTUS_POSITIONS: [number, number, number][] = [
   [-12, 0, -28],
   [14, 0, -48],
   [-10, 0, -60],
+];
+
+const SHRUB_AND_ROCK_PROPS: { pos: [number, number, number]; type: "bush" | "rock"; scale: number }[] = [
+  { pos: [-16, 0, 42], type: "bush", scale: 1.1 },
+  { pos: [14, 0, 40], type: "rock", scale: 1.4 },
+  { pos: [-19, 0, 22], type: "rock", scale: 1.8 },
+  { pos: [17, 0, 20], type: "bush", scale: 1.2 },
+  { pos: [-18, 0, 2], type: "bush", scale: 1.0 },
+  { pos: [20, 0, -14], type: "rock", scale: 2.1 },
+  { pos: [-17, 0, -36], type: "bush", scale: 1.3 },
+  { pos: [18, 0, -56], type: "rock", scale: 1.7 },
+  { pos: [-22, 0, -70], type: "bush", scale: 1.4 },
+  { pos: [22, 0, -72], type: "rock", scale: 2.0 },
+];
+
+const CLOUD_PUFFS: { pos: [number, number, number]; scale: number }[] = [
+  { pos: [-45, 36, -110], scale: 1.2 },
+  { pos: [15, 42, -130], scale: 1.5 },
+  { pos: [55, 34, -105], scale: 1.1 },
+  { pos: [-25, 38, -75], scale: 0.9 },
+];
+
+const DISTANT_HORIZON_FINS = [
+  { x: -85, z: -155, h: 42, w: 18, rotZ: -0.42 },
+  { x: -45, z: -165, h: 54, w: 20, rotZ: -0.4 },
+  { x: 0, z: -172, h: 60, w: 22, rotZ: -0.43 },
+  { x: 46, z: -162, h: 48, w: 19, rotZ: -0.39 },
+  { x: 88, z: -152, h: 38, w: 17, rotZ: -0.44 },
 ];
 
 function buildRoadGeometry(curve: THREE.CatmullRomCurve3, width: number, segments = 120) {
@@ -312,8 +340,15 @@ export function RadiatorSpringsScene({
 
   return (
     <>
-      <color attach="background" args={["#8ecae6"]} />
-      <fog attach="fog" args={["#bfe0f7", 80, 240]} />
+      <Sky
+        distance={450}
+        sunPosition={[45, 24, -110]}
+        turbidity={5}
+        rayleigh={1.1}
+        mieCoefficient={0.005}
+        mieDirectionalG={0.82}
+      />
+      <fog attach="fog" args={["#e8d5c4", 95, 260]} />
       <ambientLight ref={ambientRef} intensity={1.15} color="#fff7ed" />
       <hemisphereLight args={["#e0f2fe", "#c27849", 0.85]} />
       <directionalLight
@@ -323,11 +358,56 @@ export function RadiatorSpringsScene({
         color="#fffbeb"
       />
 
+      {/* Fluffy Morning Clouds */}
+      {CLOUD_PUFFS.map((c, idx) => (
+        <group key={idx} position={c.pos} scale={c.scale}>
+          <mesh position={[0, 0, 0]}>
+            <sphereGeometry args={[4.5, 10, 10]} />
+            <meshBasicMaterial color="#ffffff" transparent opacity={0.88} />
+          </mesh>
+          <mesh position={[-4, -0.8, 0]}>
+            <sphereGeometry args={[3.4, 10, 10]} />
+            <meshBasicMaterial color="#f8fafc" transparent opacity={0.85} />
+          </mesh>
+          <mesh position={[4.2, -0.6, 0]}>
+            <sphereGeometry args={[3.6, 10, 10]} />
+            <meshBasicMaterial color="#f8fafc" transparent opacity={0.85} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Distant Hazy Cadillac Range Horizon */}
+      {DISTANT_HORIZON_FINS.map((fin, idx) => (
+        <mesh
+          key={idx}
+          position={[fin.x, fin.h * 0.38, fin.z]}
+          rotation={[0.06, 0, fin.rotZ]}
+        >
+          <boxGeometry args={[fin.w, fin.h, 14]} />
+          <meshStandardMaterial color="#b46345" roughness={0.95} flatShading />
+        </mesh>
+      ))}
+
       {/* Desert Ground */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -10]}>
-        <planeGeometry args={[280, 280]} />
+        <planeGeometry args={[360, 360]} />
         <meshStandardMaterial ref={groundMatRef} color={MORNING_GROUND} roughness={0.95} />
       </mesh>
+
+      {/* Desert Scrub Bushes & Sandstone Boulders */}
+      {SHRUB_AND_ROCK_PROPS.map((prop, idx) =>
+        prop.type === "bush" ? (
+          <mesh key={idx} position={[prop.pos[0], 0.4 * prop.scale, prop.pos[2]]} scale={prop.scale}>
+            <dodecahedronGeometry args={[0.65, 0]} />
+            <meshStandardMaterial color="#4d7c0f" roughness={0.9} flatShading />
+          </mesh>
+        ) : (
+          <mesh key={idx} position={[prop.pos[0], 0.45 * prop.scale, prop.pos[2]]} scale={[prop.scale * 1.3, prop.scale * 0.8, prop.scale]}>
+            <dodecahedronGeometry args={[0.75, 0]} />
+            <meshStandardMaterial color="#9a4a2b" roughness={0.92} flatShading />
+          </mesh>
+        )
+      )}
 
       {/* Route 66 Black Asphalt Road + Curbs & White Edge Stripes */}
       <mesh geometry={roadGeometry}>
