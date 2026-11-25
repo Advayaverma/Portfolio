@@ -144,7 +144,6 @@ export default function CarsWorld3D({ onSwitchToClassic }: CarsWorld3DProps) {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[#111113]">
       <Canvas
-        shadows
         dpr={[1, 2]}
         camera={{ fov: 52, near: 0.1, far: 250, position: [0, 5, 56] }}
       >

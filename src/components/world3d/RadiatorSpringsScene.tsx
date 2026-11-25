@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Html, Stars } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { GlbModel } from "./GlbModel";
 import { RaceCar95 } from "./RaceCar95";
@@ -24,11 +24,8 @@ interface RadiatorSpringsSceneProps {
   onSelectNpc: (npc: PitCrewNPC) => void;
 }
 
-const SUNSET_SKY = new THREE.Color("#7c2d12");
-const TWILIGHT_SKY = new THREE.Color("#2e1065");
-const NIGHT_SKY = new THREE.Color("#07070f");
-const SUNSET_GROUND = new THREE.Color("#451a12");
-const NIGHT_GROUND = new THREE.Color("#141115");
+const MORNING_SKY = new THREE.Color("#8ecae6");
+const MORNING_GROUND = new THREE.Color("#c27849");
 
 const CACTUS_POSITIONS: [number, number, number][] = [
   [-11, 0, 38],
@@ -62,7 +59,7 @@ function buildRoadGeometry(curve: THREE.CatmullRomCurve3, width: number, segment
       const b = a + 1;
       const c = a + 2;
       const d = a + 3;
-      indices.push(a, c, b, b, c, d);
+      indices.push(a, b, c, b, d, c);
     }
   }
 
@@ -101,7 +98,7 @@ function buildRoadEdgeRibbon(
       const b = a + 1;
       const c = a + 2;
       const d = a + 3;
-      indices.push(a, c, b, b, c, d);
+      indices.push(a, b, c, b, d, c);
     }
   }
 
@@ -131,8 +128,8 @@ export function RadiatorSpringsScene({
   const freeSpeed = useRef(0);
   const lastNearbyId = useRef<string | null>(null);
 
-  const [nightFactor, setNightFactor] = useState(0);
   const [carSpeed, setCarSpeed] = useState(0);
+  const nightFactor = 0;
 
   // Sync free-drive starting position when entering exploreMode
   useEffect(() => {
@@ -289,32 +286,7 @@ export function RadiatorSpringsScene({
     const velocity = Math.abs(smoothProgress.current - prev) / Math.max(dt, 0.001);
     setCarSpeed(velocity * 12);
 
-    const nf = THREE.MathUtils.smoothstep(t, 0.2, 0.85);
-    setNightFactor(nf);
-
-    // Sky & fog color interpolation (sunset -> twilight -> night)
-    const skyColor = new THREE.Color();
-    if (t < 0.5) {
-      skyColor.lerpColors(SUNSET_SKY, TWILIGHT_SKY, t * 2);
-    } else {
-      skyColor.lerpColors(TWILIGHT_SKY, NIGHT_SKY, (t - 0.5) * 2);
-    }
-    scene.background = skyColor;
-    if (scene.fog instanceof THREE.FogExp2) {
-      scene.fog.color.copy(skyColor);
-    }
-
-    if (groundMatRef.current) {
-      groundMatRef.current.color.lerpColors(SUNSET_GROUND, NIGHT_GROUND, nf);
-    }
-
-    if (ambientRef.current) {
-      ambientRef.current.intensity = THREE.MathUtils.lerp(0.85, 0.35, nf);
-    }
-    if (sunRef.current) {
-      sunRef.current.intensity = THREE.MathUtils.lerp(2.0, 0.35, nf);
-      sunRef.current.position.set(18, THREE.MathUtils.lerp(12, 3, nf), -30);
-    }
+    scene.background = MORNING_SKY;
 
     // Position #95 car on spline
     const carPt = roadCurve.getPointAt(t);
@@ -340,68 +312,45 @@ export function RadiatorSpringsScene({
 
   return (
     <>
-      <fogExp2 attach="fog" args={["#7c2d12", 0.016]} />
-      <ambientLight ref={ambientRef} intensity={1.05} color="#fed7aa" />
-      <hemisphereLight args={["#fdba74", "#27272a", 0.7]} />
+      <color attach="background" args={["#8ecae6"]} />
+      <fog attach="fog" args={["#bfe0f7", 80, 240]} />
+      <ambientLight ref={ambientRef} intensity={1.15} color="#fff7ed" />
+      <hemisphereLight args={["#e0f2fe", "#c27849", 0.85]} />
       <directionalLight
         ref={sunRef}
-        position={[18, 12, -30]}
-        intensity={2.2}
-        color="#fb923c"
-        castShadow
+        position={[24, 36, 18]}
+        intensity={1.8}
+        color="#fffbeb"
       />
 
-      {nightFactor > 0.2 && (
-        <Stars
-          radius={90}
-          depth={40}
-          count={Math.round(1400 * nightFactor)}
-          factor={3.5}
-          saturation={0.2}
-          fade
-        />
-      )}
-
       {/* Desert Ground */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -10]} receiveShadow>
-        <planeGeometry args={[260, 260]} />
-        <meshStandardMaterial ref={groundMatRef} color="#451a12" roughness={0.95} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -10]}>
+        <planeGeometry args={[280, 280]} />
+        <meshStandardMaterial ref={groundMatRef} color={MORNING_GROUND} roughness={0.95} />
       </mesh>
 
-      {/* Route 66 Black Asphalt Road + Curbs & Edge Lines */}
-      <mesh geometry={roadGeometry} receiveShadow>
-        <meshStandardMaterial color="#09090b" roughness={0.9} />
+      {/* Route 66 Black Asphalt Road + Curbs & White Edge Stripes */}
+      <mesh geometry={roadGeometry}>
+        <meshStandardMaterial color="#111113" roughness={0.9} side={THREE.DoubleSide} />
       </mesh>
-      <mesh geometry={leftCurbGeo} receiveShadow>
-        <meshStandardMaterial color="#a8a29e" roughness={0.85} />
+      <mesh geometry={leftCurbGeo}>
+        <meshStandardMaterial color="#d6d3d1" roughness={0.85} side={THREE.DoubleSide} />
       </mesh>
-      <mesh geometry={rightCurbGeo} receiveShadow>
-        <meshStandardMaterial color="#a8a29e" roughness={0.85} />
+      <mesh geometry={rightCurbGeo}>
+        <meshStandardMaterial color="#d6d3d1" roughness={0.85} side={THREE.DoubleSide} />
       </mesh>
       <mesh geometry={leftLineGeo}>
-        <meshStandardMaterial
-          color="#e4e4e7"
-          emissive="#ffffff"
-          emissiveIntensity={0.08 + nightFactor * 0.25}
-        />
+        <meshStandardMaterial color="#f8fafc" side={THREE.DoubleSide} />
       </mesh>
       <mesh geometry={rightLineGeo}>
-        <meshStandardMaterial
-          color="#e4e4e7"
-          emissive="#ffffff"
-          emissiveIntensity={0.08 + nightFactor * 0.25}
-        />
+        <meshStandardMaterial color="#f8fafc" side={THREE.DoubleSide} />
       </mesh>
 
-      {/* Dashed yellow center lines */}
+      {/* Dashed white center stripes */}
       {dashes.map((d, i) => (
         <mesh key={i} position={d.pos} rotation={[0, d.rotY, 0]}>
-          <boxGeometry args={[0.16, 0.02, 1.2]} />
-          <meshStandardMaterial
-            color="#facc15"
-            emissive="#f59e0b"
-            emissiveIntensity={0.2 + nightFactor * 0.4}
-          />
+          <boxGeometry args={[0.16, 0.025, 1.35]} />
+          <meshStandardMaterial color="#f8fafc" />
         </mesh>
       ))}
 
