@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { HiDownload } from "react-icons/hi";
 import { profile } from "../data/portfolio";
 import { scrollToSection } from "../hooks/useActiveSection";
@@ -8,9 +9,18 @@ import DecryptedText from "./reactbits/DecryptedText";
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const stripeLeft = useTransform(scrollYProgress, [0, 1], [0, -140]);
+  const stripeRight = useTransform(scrollYProgress, [0, 1], [0, 140]);
 
   return (
     <section
+      ref={sectionRef}
       id="hero"
       className="hero-glow relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-20 md:px-6"
     >
@@ -23,6 +33,19 @@ export function Hero() {
             speed={0.5}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#111113]" />
+        </div>
+      )}
+
+      {!prefersReducedMotion && (
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <motion.div
+            style={{ x: stripeLeft }}
+            className="absolute top-[24%] -left-24 h-px w-[55%] bg-gradient-to-r from-transparent via-red-500/35 to-transparent"
+          />
+          <motion.div
+            style={{ x: stripeRight }}
+            className="absolute top-[74%] -right-24 h-px w-[55%] bg-gradient-to-r from-transparent via-orange-400/35 to-transparent"
+          />
         </div>
       )}
 

@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 import { HiMail, HiPhone } from "react-icons/hi";
@@ -27,6 +28,8 @@ const socialLinks = [
 ].filter((link) => link.href);
 
 export function Contact() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section id="contact" className="px-4 py-20 md:px-6 md:py-28">
       <div className="mx-auto max-w-6xl">
@@ -77,6 +80,15 @@ export function Contact() {
             )}
           </div>
         </FadeIn>
+
+        <motion.div
+          aria-hidden="true"
+          className="checkered-strip mx-auto mt-16 h-3 max-w-3xl origin-left rounded-full opacity-50"
+          initial={prefersReducedMotion ? false : { scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        />
       </div>
     </section>
   );

@@ -21,7 +21,11 @@ export function Education() {
             const isExpanded = expandedIndex === index;
 
             return (
-              <FadeIn key={`${item.degree}-${item.period}`} delay={index * 0.08}>
+              <FadeIn
+                key={`${item.degree}-${item.period}`}
+                delay={index * 0.08}
+                direction={index % 2 === 0 ? "left" : "right"}
+              >
                 <div className="glass-card rounded-2xl p-6 transition-transform hover:-translate-y-0.5 md:p-8">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div>

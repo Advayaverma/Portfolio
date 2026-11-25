@@ -16,7 +16,11 @@ export function Projects() {
 
         <div className="grid gap-8 md:grid-cols-2">
           {projects.map((project, index) => (
-            <FadeIn key={project.title} delay={index * 0.1}>
+            <FadeIn
+              key={project.title}
+              delay={index * 0.08}
+              direction={index % 2 === 0 ? "left" : "right"}
+            >
               <SpotlightCard
                 spotlightColor="rgba(249, 115, 22, 0.2)"
                 className="glass-card group flex h-full flex-col rounded-2xl p-6 transition-transform hover:-translate-y-1 md:p-8"
