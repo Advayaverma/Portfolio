@@ -217,6 +217,20 @@ export function RadiatorSpringsScene({
     return items;
   }, []);
 
+  // Seamless approach road extending 32 units behind the start line
+  const approachRoad = useMemo(() => {
+    const startPt = roadCurve.getPointAt(0);
+    const startTan = roadCurve.getTangentAt(0).normalize();
+    const len = 32;
+    const center = startPt.clone().addScaledVector(startTan, -len / 2);
+    const rotY = Math.atan2(startTan.x, startTan.z);
+    return {
+      pos: [center.x, 0.02, center.z] as [number, number, number],
+      rotY,
+      len,
+    };
+  }, []);
+
   const lamps = useMemo(() => {
     const items: { pos: [number, number, number]; rotY: number }[] = [];
     const up = new THREE.Vector3(0, 1, 0);
@@ -408,6 +422,36 @@ export function RadiatorSpringsScene({
           </mesh>
         )
       )}
+
+      {/* Seamless Approach Road behind Start Line */}
+      <group position={approachRoad.pos} rotation={[0, approachRoad.rotY, 0]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[6.2, approachRoad.len]} />
+          <meshStandardMaterial color="#111113" roughness={0.9} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[-3.35, 0.015, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.55, approachRoad.len]} />
+          <meshStandardMaterial color="#d6d3d1" roughness={0.85} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[3.35, 0.015, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.55, approachRoad.len]} />
+          <meshStandardMaterial color="#d6d3d1" roughness={0.85} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[-2.85, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.14, approachRoad.len]} />
+          <meshStandardMaterial color="#f8fafc" side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[2.85, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[0.14, approachRoad.len]} />
+          <meshStandardMaterial color="#f8fafc" side={THREE.DoubleSide} />
+        </mesh>
+        {[-12, -8, -4, 0, 4, 8, 12].map((zOff) => (
+          <mesh key={zOff} position={[0, 0.015, zOff]}>
+            <boxGeometry args={[0.16, 0.025, 1.35]} />
+            <meshStandardMaterial color="#f8fafc" />
+          </mesh>
+        ))}
+      </group>
 
       {/* Route 66 Black Asphalt Road + Curbs & White Edge Stripes */}
       <mesh geometry={roadGeometry}>

@@ -53,7 +53,7 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
           <boxGeometry args={[4.6, 1.8, 0.14]} />
           <meshStandardMaterial color="#14532d" roughness={0.6} />
         </mesh>
-        <Html position={[0, 5.9, 0.35]} center distanceFactor={16} zIndexRange={[10, 0]}>
+        <Html position={[0, 5.9, 0]} center distanceFactor={16} zIndexRange={[10, 0]}>
           <div className="pointer-events-none whitespace-nowrap rounded border-2 border-white/80 bg-[#14532d] px-3 py-1 text-xs font-bold tracking-wide text-white shadow-lg">
             Radiator Springs ↘
           </div>
