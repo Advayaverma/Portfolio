@@ -50,13 +50,13 @@ function roadsideSpot(
   return { position: [pos.x, 0, pos.z], rotY };
 }
 
-const materSpot = roadsideSpot(0.14, -1, 5.8);
-const fillmoreSpot = roadsideSpot(0.28, 1, 5.8);
-const sallySpot = roadsideSpot(0.34, -1, 5.8);
-const docSpot = roadsideSpot(0.44, 1, 5.8);
-const luigiSpot = roadsideSpot(0.56, -1, 5.8);
-const floSpot = roadsideSpot(0.58, 1, 6.2);
-const ramoneSpot = roadsideSpot(0.72, 1, 5.8);
+const materSpot = roadsideSpot(0.22, -1, 5.8);
+const fillmoreSpot = roadsideSpot(0.34, 1, 5.8);
+const sallySpot = roadsideSpot(0.42, -1, 5.8);
+const docSpot = roadsideSpot(0.52, 1, 5.8);
+const luigiSpot = roadsideSpot(0.64, -1, 5.8);
+const floSpot = roadsideSpot(0.68, 1, 6.2);
+const ramoneSpot = roadsideSpot(0.82, 1, 5.8);
 
 export const PIT_CREW_NPCS: PitCrewNPC[] = [
   {

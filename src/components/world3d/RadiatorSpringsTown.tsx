@@ -20,17 +20,17 @@ function getRoadsideTransform(t: number, side: -1 | 1, offset: number) {
 
 export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
   const entranceGate = useMemo(() => getRoadsideTransform(0.06, 1, 0), []);
-  // Left side (South): Mater's Salvage -> Cozy Cone -> Luigi's -> Curios
-  const matersJunkyard = useMemo(() => getRoadsideTransform(0.14, -1, 13.0), []);
-  const cozyCone = useMemo(() => getRoadsideTransform(0.34, -1, 12.5), []);
-  const luigisTires = useMemo(() => getRoadsideTransform(0.56, -1, 12.0), []);
-  const curiosSpot = useMemo(() => getRoadsideTransform(0.8, -1, 12.0), []);
+  // Left side (South): Curios (start) -> Mater's Salvage -> Cozy Cone -> Luigi's
+  const curiosSpot = useMemo(() => getRoadsideTransform(0.12, -1, 12.0), []);
+  const matersJunkyard = useMemo(() => getRoadsideTransform(0.22, -1, 13.0), []);
+  const cozyCone = useMemo(() => getRoadsideTransform(0.42, -1, 12.5), []);
+  const luigisTires = useMemo(() => getRoadsideTransform(0.64, -1, 12.0), []);
 
   // Right side (North): Fillmore's -> Doc Hudson's Clinic -> Flo's V8 -> Ramone's
-  const fillmoresSpot = useMemo(() => getRoadsideTransform(0.28, 1, 13.5), []);
-  const docsClinic = useMemo(() => getRoadsideTransform(0.44, 1, 12.5), []);
-  const flosCafe = useMemo(() => getRoadsideTransform(0.58, 1, 13.0), []);
-  const ramonesArt = useMemo(() => getRoadsideTransform(0.72, 1, 12.5), []);
+  const fillmoresSpot = useMemo(() => getRoadsideTransform(0.34, 1, 13.5), []);
+  const docsClinic = useMemo(() => getRoadsideTransform(0.52, 1, 12.5), []);
+  const flosCafe = useMemo(() => getRoadsideTransform(0.68, 1, 13.0), []);
+  const ramonesArt = useMemo(() => getRoadsideTransform(0.82, 1, 12.5), []);
 
   const neonGlow = 0.45 + nightFactor * 2.0;
 
@@ -62,12 +62,12 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
       </group>
 
       {/* 2. RADIATOR SPRINGS CURIOS (curios.glb) */}
-      <group position={curiosSpot.position} rotation={[0, curiosSpot.rotY + Math.PI / 2, 0]}>
+      <group position={curiosSpot.position} rotation={[0, curiosSpot.rotY - Math.PI / 2, 0]}>
         <GlbModel url="/models/curios.glb" targetLength={10} />
       </group>
 
       {/* 3. MATER'S TOWING & SALVAGE (Built from mater_junkyard.jpg — Left side) */}
-      <group position={matersJunkyard.position} rotation={[0, matersJunkyard.rotY + Math.PI / 2, 0]}>
+      <group position={matersJunkyard.position} rotation={[0, matersJunkyard.rotY - Math.PI / 2, 0]}>
         {/* Wooden plank fence wings */}
         <mesh position={[-5.2, 1.1, 3.5]} castShadow>
           <boxGeometry args={[4.2, 2.2, 0.25]} />
@@ -138,7 +138,7 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
       </group>
 
       {/* 4. COZY CONE MOTEL (cozy_cone.glb signboard + Cone Cabins & Office from Cozy_Cone_Motel.jpg) */}
-      <group position={cozyCone.position} rotation={[0, cozyCone.rotY + Math.PI / 2, 0]}>
+      <group position={cozyCone.position} rotation={[0, cozyCone.rotY - Math.PI / 2, 0]}>
         {/* Signboard GLB placed at roadside front */}
         <group position={[-4.5, 0, 4.2]}>
           <GlbModel url="/models/cozy_cone.glb" targetLength={3.4} />
@@ -190,7 +190,7 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
       </group>
 
       {/* 5. FILLMORE'S TASTE-IN (Geodesic Psychedelic Dome + Windmill from fillmores.jpg) */}
-      <group position={fillmoresSpot.position} rotation={[0, fillmoresSpot.rotY - Math.PI / 2, 0]}>
+      <group position={fillmoresSpot.position} rotation={[0, fillmoresSpot.rotY + Math.PI / 2, 0]}>
         {/* Geodesic Dome (colorful panels + steel frame) */}
         <mesh position={[0, 0.2, 0]} castShadow receiveShadow>
           <sphereGeometry args={[4.4, 8, 5, 0, Math.PI * 2, 0, Math.PI / 2]} />
@@ -234,7 +234,7 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
       </group>
 
       {/* 5B. DOC HUDSON'S ORNAMENT VALLEY CLINIC / RACING MUSEUM */}
-      <group position={docsClinic.position} rotation={[0, docsClinic.rotY - Math.PI / 2, 0]}>
+      <group position={docsClinic.position} rotation={[0, docsClinic.rotY + Math.PI / 2, 0]}>
         <mesh position={[0, 1.8, 0]} castShadow receiveShadow>
           <boxGeometry args={[7.4, 3.6, 5.2]} />
           <meshStandardMaterial color="#e7e5e4" roughness={0.8} />
@@ -260,12 +260,12 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
       </group>
 
       {/* 7. LUIGI'S CASA DELLA TIRES (luigis.glb) */}
-      <group position={luigisTires.position} rotation={[0, luigisTires.rotY + Math.PI / 2, 0]}>
+      <group position={luigisTires.position} rotation={[0, luigisTires.rotY - Math.PI / 2, 0]}>
         <GlbModel url="/models/luigis.glb" targetLength={11.5} />
       </group>
 
       {/* 8. RAMONE'S HOUSE OF BODY ART (ramones.glb) */}
-      <group position={ramonesArt.position} rotation={[0, ramonesArt.rotY - Math.PI / 2, 0]}>
+      <group position={ramonesArt.position} rotation={[0, ramonesArt.rotY + Math.PI / 2, 0]}>
         <GlbModel url="/models/ramones.glb" targetLength={12} />
       </group>
 
