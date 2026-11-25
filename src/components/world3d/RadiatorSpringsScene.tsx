@@ -3,7 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { RaceCar95 } from "./RaceCar95";
-import { roadCurve } from "./roadPath";
+import { roadCurve, STOP_PROGRESS } from "./roadPath";
 
 interface RadiatorSpringsSceneProps {
   targetProgress: number;
@@ -85,6 +85,17 @@ export function RadiatorSpringsScene({ targetProgress }: RadiatorSpringsScenePro
   const [carSpeed, setCarSpeed] = useState(0);
 
   const roadGeometry = useMemo(() => buildRoadGeometry(roadCurve, 6.2, 140), []);
+
+  const stopGates = useMemo(() => {
+    return STOP_PROGRESS.map((t) => {
+      const pt = roadCurve.getPointAt(t);
+      const tan = roadCurve.getTangentAt(t).normalize();
+      return {
+        pos: [pt.x, 0, pt.z] as [number, number, number],
+        rotY: Math.atan2(tan.x, tan.z),
+      };
+    });
+  }, []);
 
   const dashes = useMemo(() => {
     const items: { pos: [number, number, number]; rotY: number }[] = [];
@@ -274,6 +285,28 @@ export function RadiatorSpringsScene({ targetProgress }: RadiatorSpringsScenePro
               color="#fb923c"
             />
           )}
+        </group>
+      ))}
+
+      {/* Pit-Stop Roadside Arches */}
+      {stopGates.map((gate, idx) => (
+        <group key={idx} position={gate.pos} rotation={[0, gate.rotY, 0]}>
+          <mesh position={[-3.4, 2.3, 0]}>
+            <boxGeometry args={[0.2, 4.6, 0.2]} />
+            <meshStandardMaterial color="#27272a" metalness={0.6} roughness={0.4} />
+          </mesh>
+          <mesh position={[3.4, 2.3, 0]}>
+            <boxGeometry args={[0.2, 4.6, 0.2]} />
+            <meshStandardMaterial color="#27272a" metalness={0.6} roughness={0.4} />
+          </mesh>
+          <mesh position={[0, 4.65, 0]}>
+            <boxGeometry args={[7.2, 0.22, 0.28]} />
+            <meshStandardMaterial
+              color="#f97316"
+              emissive="#e11d2e"
+              emissiveIntensity={0.6 + nightFactor * 1.4}
+            />
+          </mesh>
         </group>
       ))}
 
