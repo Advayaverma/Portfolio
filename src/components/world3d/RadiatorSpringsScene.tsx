@@ -1,12 +1,25 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Stars } from "@react-three/drei";
+import { Html, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { RaceCar95 } from "./RaceCar95";
 import { roadCurve, STOP_PROGRESS } from "./roadPath";
+import { PIT_CREW_NPCS, type PitCrewNPC } from "./PitCrewDialogue";
+
+export interface DriveInput {
+  forward: boolean;
+  backward: boolean;
+  left: boolean;
+  right: boolean;
+  boost: boolean;
+}
 
 interface RadiatorSpringsSceneProps {
   targetProgress: number;
+  exploreMode: boolean;
+  driveInputRef: React.MutableRefObject<DriveInput>;
+  onNearbyNpcChange: (npc: PitCrewNPC | null) => void;
+  onSelectNpc: (npc: PitCrewNPC) => void;
 }
 
 const SUNSET_SKY = new THREE.Color("#7c2d12");
@@ -73,7 +86,13 @@ function buildRoadGeometry(curve: THREE.CatmullRomCurve3, width: number, segment
   return geo;
 }
 
-export function RadiatorSpringsScene({ targetProgress }: RadiatorSpringsSceneProps) {
+export function RadiatorSpringsScene({
+  targetProgress,
+  exploreMode,
+  driveInputRef,
+  onNearbyNpcChange,
+  onSelectNpc,
+}: RadiatorSpringsSceneProps) {
   const { scene, camera } = useThree();
   const smoothProgress = useRef(0.04);
   const carGroupRef = useRef<THREE.Group>(null);
@@ -81,8 +100,27 @@ export function RadiatorSpringsScene({ targetProgress }: RadiatorSpringsScenePro
   const sunRef = useRef<THREE.DirectionalLight>(null);
   const groundMatRef = useRef<THREE.MeshStandardMaterial>(null);
 
+  const freePos = useRef(new THREE.Vector3(0, 0, 40));
+  const freeRotY = useRef(Math.PI);
+  const freeSpeed = useRef(0);
+  const lastNearbyId = useRef<string | null>(null);
+
   const [nightFactor, setNightFactor] = useState(0);
   const [carSpeed, setCarSpeed] = useState(0);
+
+  // Sync free-drive starting position when entering exploreMode
+  useEffect(() => {
+    if (exploreMode && carGroupRef.current) {
+      freePos.current.copy(carGroupRef.current.position);
+      freeRotY.current = carGroupRef.current.rotation.y;
+      freeSpeed.current = 0;
+    } else {
+      if (lastNearbyId.current !== null) {
+        lastNearbyId.current = null;
+        onNearbyNpcChange(null);
+      }
+    }
+  }, [exploreMode, onNearbyNpcChange]);
 
   const roadGeometry = useMemo(() => buildRoadGeometry(roadCurve, 6.2, 140), []);
 
@@ -131,14 +169,82 @@ export function RadiatorSpringsScene({ targetProgress }: RadiatorSpringsScenePro
   }, []);
 
   useFrame((_, delta) => {
+    const dt = Math.min(delta, 0.05);
+
+    if (exploreMode) {
+      const inp = driveInputRef.current;
+      const maxSpeed = inp.boost ? 24 : 14;
+      const accel = inp.boost ? 28 : 18;
+
+      if (inp.forward) {
+        freeSpeed.current = Math.min(maxSpeed, freeSpeed.current + accel * dt);
+      } else if (inp.backward) {
+        freeSpeed.current = Math.max(-8, freeSpeed.current - accel * dt);
+      } else {
+        freeSpeed.current = THREE.MathUtils.lerp(freeSpeed.current, 0, dt * 4);
+      }
+
+      if (Math.abs(freeSpeed.current) > 0.25) {
+        const steerDir = freeSpeed.current >= 0 ? 1 : -1;
+        if (inp.left) freeRotY.current += 2.1 * dt * steerDir;
+        if (inp.right) freeRotY.current -= 2.1 * dt * steerDir;
+      }
+
+      const forwardVec = new THREE.Vector3(
+        Math.sin(freeRotY.current),
+        0,
+        Math.cos(freeRotY.current)
+      );
+      freePos.current.addScaledVector(forwardVec, freeSpeed.current * dt);
+      freePos.current.x = THREE.MathUtils.clamp(freePos.current.x, -85, 85);
+      freePos.current.z = THREE.MathUtils.clamp(freePos.current.z, -85, 85);
+
+      if (carGroupRef.current) {
+        carGroupRef.current.position.copy(freePos.current);
+        carGroupRef.current.rotation.y = freeRotY.current;
+      }
+
+      setCarSpeed(Math.abs(freeSpeed.current) * 0.4);
+
+      const desiredCamPos = freePos.current
+        .clone()
+        .addScaledVector(forwardVec, -10)
+        .add(new THREE.Vector3(0, 4.8, 0));
+      camera.position.lerp(desiredCamPos, Math.min(1, dt * 6));
+      const lookTarget = freePos.current
+        .clone()
+        .addScaledVector(forwardVec, 5)
+        .add(new THREE.Vector3(0, 1.2, 0));
+      camera.lookAt(lookTarget);
+
+      // Check proximity to Pit-Crew NPCs
+      let closestNpc: PitCrewNPC | null = null;
+      let closestDist = 7.5;
+      for (const npc of PIT_CREW_NPCS) {
+        const dist = freePos.current.distanceTo(
+          new THREE.Vector3(npc.position[0], 0, npc.position[2])
+        );
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestNpc = npc;
+        }
+      }
+      const nextId = closestNpc?.id ?? null;
+      if (nextId !== lastNearbyId.current) {
+        lastNearbyId.current = nextId;
+        onNearbyNpcChange(closestNpc);
+      }
+      return;
+    }
+
     const prev = smoothProgress.current;
     smoothProgress.current = THREE.MathUtils.lerp(
       smoothProgress.current,
       targetProgress,
-      Math.min(1, delta * 4.5)
+      Math.min(1, dt * 4.5)
     );
     const t = THREE.MathUtils.clamp(smoothProgress.current, 0.01, 0.99);
-    const velocity = Math.abs(smoothProgress.current - prev) / Math.max(delta, 0.001);
+    const velocity = Math.abs(smoothProgress.current - prev) / Math.max(dt, 0.001);
     setCarSpeed(velocity * 12);
 
     const nf = THREE.MathUtils.smoothstep(t, 0.2, 0.85);
@@ -184,7 +290,7 @@ export function RadiatorSpringsScene({ targetProgress }: RadiatorSpringsScenePro
       .addScaledVector(carTan, -9.5)
       .addScaledVector(right, 2.4)
       .add(new THREE.Vector3(0, 4.2, 0));
-    camera.position.lerp(desiredCamPos, Math.min(1, delta * 5));
+    camera.position.lerp(desiredCamPos, Math.min(1, dt * 5));
 
     const lookTarget = carPt.clone().addScaledVector(carTan, 6).add(new THREE.Vector3(0, 1.1, 0));
     camera.lookAt(lookTarget);
@@ -307,6 +413,47 @@ export function RadiatorSpringsScene({ targetProgress }: RadiatorSpringsScenePro
               emissiveIntensity={0.6 + nightFactor * 1.4}
             />
           </mesh>
+        </group>
+      ))}
+
+      {/* Pit-Crew NPCs */}
+      {PIT_CREW_NPCS.map((npc) => (
+        <group
+          key={npc.id}
+          position={npc.position}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelectNpc(npc);
+          }}
+        >
+          {/* Glowing Pit Ring */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}>
+            <ringGeometry args={[1.1, 1.35, 24]} />
+            <meshBasicMaterial color={npc.color} transparent opacity={0.7} />
+          </mesh>
+          {/* Body */}
+          <mesh position={[0, 0.9, 0]} castShadow>
+            <boxGeometry args={[0.7, 1.0, 0.5]} />
+            <meshStandardMaterial color={npc.color} roughness={0.6} />
+          </mesh>
+          {/* Head + Headset */}
+          <mesh position={[0, 1.65, 0]} castShadow>
+            <boxGeometry args={[0.5, 0.5, 0.5]} />
+            <meshStandardMaterial color="#fde68a" roughness={0.7} />
+          </mesh>
+          <mesh position={[0, 1.92, 0]}>
+            <boxGeometry args={[0.56, 0.14, 0.56]} />
+            <meshStandardMaterial color="#18181b" />
+          </mesh>
+          <Html position={[0, 2.45, 0]} center distanceFactor={16}>
+            <button
+              type="button"
+              onClick={() => onSelectNpc(npc)}
+              className="whitespace-nowrap rounded-full border border-orange-500/40 bg-[#111113]/85 px-2.5 py-0.5 text-[10px] font-semibold text-orange-300 shadow backdrop-blur-sm hover:border-orange-400 hover:text-white"
+            >
+              {npc.name}
+            </button>
+          </Html>
         </group>
       ))}
 

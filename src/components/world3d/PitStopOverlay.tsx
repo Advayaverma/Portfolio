@@ -24,14 +24,46 @@ export interface PitStopMeta {
   badge: string;
   label: string;
   progress: number;
+  positionClass: string;
 }
 
 export const PIT_STOPS: PitStopMeta[] = [
-  { id: "ignition", badge: "START LINE", label: "Ignition", progress: 0.04 },
-  { id: "about", badge: "PIT STOP 01", label: "About & Skills", progress: 0.26 },
-  { id: "projects", badge: "THE GARAGE", label: "Projects", progress: 0.5 },
-  { id: "record", badge: "TRACK RECORD", label: "Experience", progress: 0.74 },
-  { id: "contact", badge: "FINISH LINE", label: "Contact", progress: 0.94 },
+  {
+    id: "ignition",
+    badge: "START LINE",
+    label: "Ignition",
+    progress: 0.04,
+    positionClass: "bottom-14 left-4 right-4 md:bottom-10 md:left-6 md:right-auto",
+  },
+  {
+    id: "about",
+    badge: "PIT STOP 01",
+    label: "About & Skills",
+    progress: 0.26,
+    positionClass: "top-20 left-4 right-4 md:top-24 md:left-6 md:right-auto",
+  },
+  {
+    id: "projects",
+    badge: "THE GARAGE",
+    label: "Projects",
+    progress: 0.5,
+    positionClass: "bottom-14 left-4 right-4 md:bottom-10 md:left-auto md:right-16",
+  },
+  {
+    id: "record",
+    badge: "TRACK RECORD",
+    label: "Experience",
+    progress: 0.74,
+    positionClass: "top-20 left-4 right-4 md:top-24 md:left-auto md:right-16",
+  },
+  {
+    id: "contact",
+    badge: "FINISH LINE",
+    label: "Contact",
+    progress: 0.94,
+    positionClass:
+      "bottom-14 left-4 right-4 md:bottom-12 md:left-1/2 md:right-auto md:-translate-x-1/2",
+  },
 ];
 
 interface PitStopOverlayProps {
@@ -56,7 +88,9 @@ export function PitStopOverlay({
   const skillCategories = Object.keys(skills) as (keyof typeof skills)[];
 
   return (
-    <div className="pointer-events-none fixed bottom-14 left-4 right-4 z-30 md:bottom-10 md:left-6 md:right-auto md:w-[430px]">
+    <div
+      className={`pointer-events-none fixed z-30 transition-all duration-500 md:w-[430px] ${stop.positionClass}`}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={stop.id}
