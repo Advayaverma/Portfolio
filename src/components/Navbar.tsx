@@ -4,7 +4,11 @@ import { navLinks, profile } from "../data/portfolio";
 import { scrollToSection, useActiveSection } from "../hooks/useActiveSection";
 import ShinyText from "./reactbits/ShinyText";
 
-export function Navbar() {
+interface NavbarProps {
+  onSwitchTo3D?: () => void;
+}
+
+export function Navbar({ onSwitchTo3D }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const sectionIds = navLinks.map((l) => l.id);
   const activeSection = useActiveSection(sectionIds);
@@ -49,13 +53,24 @@ export function Navbar() {
           ))}
         </ul>
 
-        <a
-          href={profile.resumeFile}
-          download
-          className="hidden rounded-lg bg-gradient-to-r from-red-600 to-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-red-600/20 transition-opacity hover:opacity-90 md:inline-block"
-        >
-          Resume
-        </a>
+        <div className="hidden items-center gap-3 md:flex">
+          {onSwitchTo3D && (
+            <button
+              type="button"
+              onClick={onSwitchTo3D}
+              className="rounded-lg border border-orange-500/30 bg-white/5 px-3.5 py-2 text-sm font-medium text-orange-300 transition-colors hover:border-orange-400 hover:text-orange-200"
+            >
+              Back to 3D
+            </button>
+          )}
+          <a
+            href={profile.resumeFile}
+            download
+            className="rounded-lg bg-gradient-to-r from-red-600 to-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-red-600/20 transition-opacity hover:opacity-90"
+          >
+            Resume
+          </a>
+        </div>
 
         <button
           type="button"
@@ -85,6 +100,20 @@ export function Navbar() {
                 </button>
               </li>
             ))}
+            {onSwitchTo3D && (
+              <li>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    onSwitchTo3D();
+                  }}
+                  className="mt-2 block w-full rounded-lg border border-orange-500/30 bg-white/5 px-3 py-2 text-center text-sm font-medium text-orange-300"
+                >
+                  Back to 3D
+                </button>
+              </li>
+            )}
             <li>
               <a
                 href={profile.resumeFile}
