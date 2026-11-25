@@ -12,14 +12,18 @@ export function Experience() {
           subtitle="Professional work and internships"
         />
 
-        <div className="space-y-8">
+        <div className="relative space-y-8 pl-6 before:absolute before:top-2 before:bottom-2 before:left-[7px] before:w-0.5 before:bg-gradient-to-b before:from-red-600 before:via-orange-500 before:to-yellow-400/30 md:pl-8">
           {experience.map((item, index) => (
             <FadeIn
               key={`${item.company}-${item.period}`}
               delay={index * 0.1}
               direction={index % 2 === 0 ? "left" : "right"}
             >
-              <article className="glass-card rounded-2xl p-6 transition-transform hover:-translate-y-0.5 md:p-8">
+              <article className="glass-card relative rounded-2xl p-6 transition-transform hover:-translate-y-0.5 md:p-8">
+                <span
+                  aria-hidden="true"
+                  className="absolute top-8 -left-[25px] h-3.5 w-3.5 rounded-full border-2 border-[#111113] bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)] md:-left-[33px]"
+                />
                 <div className="mb-4 flex items-start gap-4">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-red-600/25 to-orange-500/25 text-orange-400">
                     <HiBriefcase size={20} />

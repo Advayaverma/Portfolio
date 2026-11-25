@@ -25,9 +25,19 @@ export function Projects() {
                 spotlightColor="rgba(249, 115, 22, 0.2)"
                 className="glass-card group flex h-full flex-col rounded-2xl p-6 transition-transform hover:-translate-y-1 md:p-8"
               >
-                <div className="mb-4 flex items-start justify-between gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-red-600/25 to-orange-500/25 text-orange-400">
-                    <HiCode size={20} />
+                <div className="mb-4 flex items-center justify-between gap-4 border-b border-orange-500/15 pb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-red-600/25 to-orange-500/25 text-orange-400">
+                      <HiCode size={20} />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-number rounded bg-red-600/20 px-2 py-0.5 text-xs tracking-widest text-orange-300 ring-1 ring-orange-500/30">
+                        LAP {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="text-xs text-zinc-500">
+                        {project.tech.length} stack
+                      </span>
+                    </div>
                   </div>
                   <div className="flex gap-2">
                     {project.github && (

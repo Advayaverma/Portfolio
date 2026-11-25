@@ -15,7 +15,7 @@ export function Education() {
           subtitle="Academic background and coursework"
         />
 
-        <div className="space-y-4">
+        <div className="relative space-y-4 pl-6 before:absolute before:top-2 before:bottom-2 before:left-[7px] before:w-0.5 before:bg-gradient-to-b before:from-red-600 before:via-orange-500 before:to-yellow-400/30 md:pl-8">
           {education.map((item, index) => {
             const hasCoursework = item.coursework.length > 0;
             const isExpanded = expandedIndex === index;
@@ -26,7 +26,11 @@ export function Education() {
                 delay={index * 0.08}
                 direction={index % 2 === 0 ? "left" : "right"}
               >
-                <div className="glass-card rounded-2xl p-6 transition-transform hover:-translate-y-0.5 md:p-8">
+                <div className="glass-card relative rounded-2xl p-6 transition-transform hover:-translate-y-0.5 md:p-8">
+                  <span
+                    aria-hidden="true"
+                    className="absolute top-8 -left-[25px] h-3.5 w-3.5 rounded-full border-2 border-[#111113] bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)] md:-left-[33px]"
+                  />
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <h3 className="text-lg font-semibold text-zinc-100">

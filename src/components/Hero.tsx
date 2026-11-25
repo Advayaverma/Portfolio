@@ -6,6 +6,7 @@ import { scrollToSection } from "../hooks/useActiveSection";
 import Aurora from "./reactbits/Aurora";
 import SplitText from "./reactbits/SplitText";
 import DecryptedText from "./reactbits/DecryptedText";
+import { Lightning95Badge } from "./Lightning95Badge";
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
@@ -50,14 +51,17 @@ export function Hero() {
       )}
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
-        <motion.p
-          className="font-racing mb-4 text-sm font-semibold uppercase tracking-widest text-orange-400"
+        <motion.div
+          className="mb-4 flex items-center justify-center gap-3"
           initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Portfolio
-        </motion.p>
+          <p className="font-racing text-sm font-semibold uppercase tracking-widest text-orange-400">
+            Portfolio
+          </p>
+          <Lightning95Badge />
+        </motion.div>
 
         {prefersReducedMotion ? (
           <h1 className="font-racing text-5xl font-extrabold tracking-tight md:text-7xl">

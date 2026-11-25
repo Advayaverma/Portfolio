@@ -57,25 +57,50 @@ export function Skills() {
           </div>
 
           <div className="mt-8 hidden gap-4 md:grid md:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category, catIndex) => (
-              <FadeIn key={category} delay={catIndex * 0.08}>
-                <div className="glass-card h-full rounded-2xl p-6 transition-transform hover:-translate-y-1">
-                  <h3 className="font-racing mb-3 text-sm font-semibold uppercase tracking-wide text-orange-400">
-                    {category}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {skills[category].map((skill) => (
-                      <span
-                        key={skill}
-                        className="rounded-md bg-white/5 px-3 py-1 text-xs text-zinc-400"
-                      >
-                        {skill}
+            {categories.map((category, catIndex) => {
+              const count = skills[category].length;
+              const rpmPercent = Math.min(100, Math.round((count / 12) * 100));
+
+              return (
+                <FadeIn key={category} delay={catIndex * 0.08}>
+                  <div className="glass-card h-full rounded-2xl p-6 transition-transform hover:-translate-y-1">
+                    <div className="mb-3 flex items-center justify-between gap-2">
+                      <h3 className="font-racing text-sm font-semibold uppercase tracking-wide text-orange-400">
+                        {category}
+                      </h3>
+                      <span className="font-number text-xs tracking-wider text-yellow-400/90">
+                        {count} {count === 1 ? "TECH" : "TECHS"}
                       </span>
-                    ))}
+                    </div>
+
+                    <div
+                      className="mb-4 h-1.5 w-full overflow-hidden rounded-full bg-white/5"
+                      aria-hidden="true"
+                    >
+                      <motion.div
+                        className="h-full origin-left rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400"
+                        initial={prefersReducedMotion ? false : { scaleX: 0 }}
+                        whileInView={{ scaleX: 1 }}
+                        viewport={{ once: true, margin: "-40px" }}
+                        transition={{ duration: 0.7, delay: catIndex * 0.06, ease: "easeOut" }}
+                        style={{ width: `${rpmPercent}%` }}
+                      />
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {skills[category].map((skill) => (
+                        <span
+                          key={skill}
+                          className="rounded-md bg-white/5 px-3 py-1 text-xs text-zinc-400"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </FadeIn>
-            ))}
+                </FadeIn>
+              );
+            })}
           </div>
         </FadeIn>
       </div>

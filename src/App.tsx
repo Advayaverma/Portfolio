@@ -1,5 +1,6 @@
 import { About } from "./components/About";
 import { Certifications } from "./components/Certifications";
+import { CheckeredFooter } from "./components/CheckeredFooter";
 import { Contact } from "./components/Contact";
 import { Education } from "./components/Education";
 import { Experience } from "./components/Experience";
@@ -32,6 +33,7 @@ function App() {
         <FlameGradientDivider />
         <Contact />
       </main>
+      <CheckeredFooter />
       <ScrollToTop />
     </>
   );
