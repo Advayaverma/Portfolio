@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Html, Stars } from "@react-three/drei";
 import * as THREE from "three";
+import { GlbModel } from "./GlbModel";
 import { RaceCar95 } from "./RaceCar95";
 import { RadiatorSpringsTown } from "./RadiatorSpringsTown";
 import { roadCurve, STOP_PROGRESS } from "./roadPath";
@@ -285,11 +286,12 @@ export function RadiatorSpringsScene({
   return (
     <>
       <fogExp2 attach="fog" args={["#7c2d12", 0.016]} />
-      <ambientLight ref={ambientRef} intensity={0.85} color="#fed7aa" />
+      <ambientLight ref={ambientRef} intensity={1.05} color="#fed7aa" />
+      <hemisphereLight args={["#fdba74", "#27272a", 0.7]} />
       <directionalLight
         ref={sunRef}
         position={[18, 12, -30]}
-        intensity={2}
+        intensity={2.2}
         color="#fb923c"
         castShadow
       />
@@ -397,7 +399,7 @@ export function RadiatorSpringsScene({
         </group>
       ))}
 
-      {/* Cars Movie NPCs (Mater, Fillmore, Doc Hudson, Luigi & Guido, Ramone, Sally) stationed off-track */}
+      {/* Cars Movie NPCs (GLB models stationed off-track) */}
       {PIT_CREW_NPCS.map((npc) => (
         <group
           key={npc.id}
@@ -414,149 +416,23 @@ export function RadiatorSpringsScene({
             <meshBasicMaterial color={npc.color} transparent opacity={0.65} />
           </mesh>
 
-          {/* Car Body (Fillmore is taller van, Luigi is compact Fiat) */}
-          <mesh position={[0, npc.variant === "fillmore" ? 0.65 : 0.52, 0]} castShadow receiveShadow>
-            <boxGeometry
-              args={[
-                npc.variant === "luigi" ? 1.35 : 1.65,
-                npc.variant === "fillmore" ? 0.85 : 0.5,
-                npc.variant === "luigi" ? 2.5 : 3.3,
-              ]}
-            />
-            <meshStandardMaterial
-              color={npc.color}
-              roughness={npc.variant === "mater" ? 0.85 : 0.25}
-              metalness={npc.variant === "mater" ? 0.15 : 0.45}
-            />
-          </mesh>
+          <GlbModel
+            url={npc.modelUrl}
+            targetLength={npc.targetLength}
+            fallback={
+              <mesh position={[0, 0.55, 0]} castShadow>
+                <boxGeometry args={[1.6, 0.9, 3.0]} />
+                <meshStandardMaterial color={npc.color} />
+              </mesh>
+            }
+          />
 
-          {/* Cabin */}
-          {npc.variant !== "fillmore" && (
-            <mesh
-              position={[0, 0.98, npc.variant === "mater" ? 0.35 : -0.15]}
-              castShadow
-            >
-              <boxGeometry
-                args={[
-                  npc.variant === "luigi" ? 1.15 : 1.35,
-                  0.46,
-                  npc.variant === "mater" ? 1.15 : npc.variant === "luigi" ? 1.3 : 1.55,
-                ]}
-              />
-              <meshStandardMaterial
-                color={npc.color}
-                roughness={npc.variant === "mater" ? 0.85 : 0.25}
-              />
-            </mesh>
-          )}
-
-          {/* Windshield Eyes */}
-          <mesh
-            position={[
-              0,
-              npc.variant === "fillmore" ? 0.85 : 0.98,
-              npc.variant === "mater"
-                ? 0.94
-                : npc.variant === "fillmore"
-                  ? 1.66
-                  : npc.variant === "luigi"
-                    ? 0.51
-                    : 0.64,
-            ]}
-            rotation={[-0.2, 0, 0]}
-          >
-            <boxGeometry args={[npc.variant === "luigi" ? 1.0 : 1.22, 0.32, 0.08]} />
-            <meshStandardMaterial color="#f8fafc" roughness={0.15} />
-          </mesh>
-          <mesh
-            position={[
-              -0.24,
-              npc.variant === "fillmore" ? 0.85 : 0.98,
-              npc.variant === "mater"
-                ? 0.99
-                : npc.variant === "fillmore"
-                  ? 1.71
-                  : npc.variant === "luigi"
-                    ? 0.56
-                    : 0.69,
-            ]}
-            rotation={[-0.2, 0, 0]}
-          >
-            <boxGeometry args={[0.14, 0.14, 0.03]} />
-            <meshStandardMaterial color="#09090b" />
-          </mesh>
-          <mesh
-            position={[
-              0.24,
-              npc.variant === "fillmore" ? 0.85 : 0.98,
-              npc.variant === "mater"
-                ? 0.99
-                : npc.variant === "fillmore"
-                  ? 1.71
-                  : npc.variant === "luigi"
-                    ? 0.56
-                    : 0.69,
-            ]}
-            rotation={[-0.2, 0, 0]}
-          >
-            <boxGeometry args={[0.14, 0.14, 0.03]} />
-            <meshStandardMaterial color="#09090b" />
-          </mesh>
-
-          {/* Mater's tow crane arm in back */}
-          {npc.variant === "mater" && (
-            <mesh position={[0, 1.15, -1.05]} rotation={[-0.55, 0, 0]} castShadow>
-              <boxGeometry args={[0.14, 1.1, 0.14]} />
-              <meshStandardMaterial color="#52525b" metalness={0.7} roughness={0.4} />
-            </mesh>
-          )}
-
-          {/* Doc's chrome side trim */}
-          {npc.variant === "doc" && (
-            <mesh position={[0, 0.56, 0]}>
-              <boxGeometry args={[1.7, 0.08, 2.8]} />
-              <meshStandardMaterial color="#e4e4e7" metalness={0.85} roughness={0.2} />
-            </mesh>
-          )}
-
-          {/* Ramone's gold flame stripe */}
-          {npc.variant === "ramone" && (
-            <mesh position={[0, 0.56, 0]}>
-              <boxGeometry args={[1.7, 0.1, 2.5]} />
-              <meshStandardMaterial color="#facc15" emissive="#f97316" emissiveIntensity={0.35} />
-            </mesh>
-          )}
-
-          {/* Luigi's sidekick Guido (mini blue forklift) */}
+          {/* Guido next to Luigi */}
           {npc.variant === "luigi" && (
-            <group position={[1.45, 0, 0.2]}>
-              <mesh position={[0, 0.42, 0]} castShadow>
-                <boxGeometry args={[0.75, 0.55, 1.1]} />
-                <meshStandardMaterial color="#3b82f6" roughness={0.3} />
-              </mesh>
-              <mesh position={[0, 0.55, 0.68]}>
-                <boxGeometry args={[0.5, 0.06, 0.45]} />
-                <meshStandardMaterial color="#d4d4d8" metalness={0.7} />
-              </mesh>
+            <group position={[1.8, 0, 0.2]}>
+              <GlbModel url="/models/guido.glb" targetLength={1.65} />
             </group>
           )}
-
-          {/* 4 Wheels */}
-          {[
-            [-0.85, 0.3, 1.0],
-            [0.85, 0.3, 1.0],
-            [-0.85, 0.3, -1.0],
-            [0.85, 0.3, -1.0],
-          ].map((wPos, i) => (
-            <mesh
-              key={i}
-              position={wPos as [number, number, number]}
-              rotation={[0, 0, Math.PI / 2]}
-            >
-              <cylinderGeometry args={[0.3, 0.3, 0.24, 12]} />
-              <meshStandardMaterial color="#18181b" roughness={0.85} />
-            </mesh>
-          ))}
 
           <Html position={[0, 2.35, 0]} center distanceFactor={18}>
             <button

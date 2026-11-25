@@ -15,6 +15,7 @@ import { roadCurve } from "./roadPath";
 export type CarsNpcVariant =
   | "mater"
   | "fillmore"
+  | "flo"
   | "doc"
   | "luigi"
   | "ramone"
@@ -26,6 +27,8 @@ export interface PitCrewNPC {
   role: string;
   color: string;
   variant: CarsNpcVariant;
+  modelUrl: string;
+  targetLength: number;
   position: [number, number, number];
   rotY: number;
   greeting: string;
@@ -42,17 +45,17 @@ function roadsideSpot(
   const up = new THREE.Vector3(0, 1, 0);
   const right = new THREE.Vector3().crossVectors(tan, up).normalize();
   const pos = pt.clone().addScaledVector(right, side * distance);
-  // Face slightly toward the road
   const toRoad = pt.clone().sub(pos).normalize();
   const rotY = Math.atan2(toRoad.x, toRoad.z);
   return { position: [pos.x, 0, pos.z], rotY };
 }
 
 const materSpot = roadsideSpot(0.14, -1, 5.8);
-const fillmoreSpot = roadsideSpot(0.32, 1, 5.8);
-const docSpot = roadsideSpot(0.48, 1, 5.8);
+const fillmoreSpot = roadsideSpot(0.28, 1, 5.8);
+const floSpot = roadsideSpot(0.41, 1, 6.2);
+const docSpot = roadsideSpot(0.52, 1, 5.8);
 const luigiSpot = roadsideSpot(0.64, -1, 5.8);
-const ramoneSpot = roadsideSpot(0.78, 1, 5.8);
+const ramoneSpot = roadsideSpot(0.76, 1, 5.8);
 const sallySpot = roadsideSpot(0.89, -1, 5.8);
 
 export const PIT_CREW_NPCS: PitCrewNPC[] = [
@@ -62,6 +65,8 @@ export const PIT_CREW_NPCS: PitCrewNPC[] = [
     role: "Tow-Truck Pit Pal",
     color: "#9a5b32",
     variant: "mater",
+    modelUrl: "/models/mater.glb",
+    targetLength: 3.7,
     ...materSpot,
     greeting:
       "Dad-gum! Welcome to Radiator Springs, McQueen! Ask me about the driver.",
@@ -79,6 +84,8 @@ export const PIT_CREW_NPCS: PitCrewNPC[] = [
     role: "Organic Fuel Shop",
     color: "#14b8a6",
     variant: "fillmore",
+    modelUrl: "/models/fillmore.glb",
+    targetLength: 3.5,
     ...fillmoreSpot,
     greeting:
       "Man, this portfolio runs on pure clean data and organic ML pipelines.",
@@ -94,11 +101,35 @@ export const PIT_CREW_NPCS: PitCrewNPC[] = [
     ],
   },
   {
+    id: "flo",
+    name: "Flo",
+    role: "Flo's V8 Café",
+    color: "#22d3ee",
+    variant: "flo",
+    modelUrl: "/models/flo.glb",
+    targetLength: 3.6,
+    ...floSpot,
+    greeting:
+      "Welcome to Flo's V8 Café, honey! Need a refuel on Advaya's engineering highlights?",
+    qa: [
+      {
+        question: "What's his Software Engineering background?",
+        answer: skills["Software Engineering"].join(", "),
+      },
+      {
+        question: "What DevOps tools does he use?",
+        answer: skills.DevOps.join(", "),
+      },
+    ],
+  },
+  {
     id: "doc",
     name: "Doc Hudson",
     role: "Fabulous Hudson Hornet · Crew Chief",
     color: "#1e3a8a",
     variant: "doc",
+    modelUrl: "/models/doc.glb",
+    targetLength: 3.8,
     ...docSpot,
     greeting:
       "Turn right to go left, rookie. Want to inspect the engineering builds under the hood?",
@@ -123,6 +154,8 @@ export const PIT_CREW_NPCS: PitCrewNPC[] = [
     role: "Casa Della Tires · Pit Stop",
     color: "#facc15",
     variant: "luigi",
+    modelUrl: "/models/luigi.glb",
+    targetLength: 2.7,
     ...luigiSpot,
     greeting:
       "Pit stop! Fresh Lightyear tires in 2.5 seconds. Want to check his certifications?",
@@ -145,6 +178,8 @@ export const PIT_CREW_NPCS: PitCrewNPC[] = [
     role: "House of Body Art",
     color: "#9333ea",
     variant: "ramone",
+    modelUrl: "/models/ramone.glb",
+    targetLength: 3.8,
     ...ramoneSpot,
     greeting:
       "Low and slow, baby. Check out the full-stack and frontend paint job!",
@@ -165,6 +200,8 @@ export const PIT_CREW_NPCS: PitCrewNPC[] = [
     role: "Cozy Cone · Route 66 Guide",
     color: "#38bdf8",
     variant: "sally",
+    modelUrl: "/models/sally.glb",
+    targetLength: 3.6,
     ...sallySpot,
     greeting:
       "You made it past the sunset stretch! Want to check his internship experience or reach out?",
