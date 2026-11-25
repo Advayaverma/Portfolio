@@ -53,7 +53,7 @@ export function SkillSphere3D() {
 
   return (
     <div
-      className="glass-card relative mx-auto mb-10 flex h-[340px] max-w-md cursor-grab items-center justify-center overflow-hidden rounded-2xl select-none active:cursor-grabbing"
+      className="glass-card relative mx-auto mb-10 flex h-[430px] max-w-xl cursor-grab flex-col overflow-hidden rounded-2xl p-4 select-none active:cursor-grabbing"
       onPointerDown={(e) => {
         dragging.current = true;
         lastMouse.current = { x: e.clientX, y: e.clientY };
@@ -75,13 +75,13 @@ export function SkillSphere3D() {
         dragging.current = false;
       }}
     >
-      <div className="pointer-events-none absolute inset-x-0 top-3 text-center">
-        <span className="font-racing text-[10px] uppercase tracking-widest text-orange-400/80">
+      <div className="pointer-events-none mb-2 shrink-0 border-b border-orange-500/15 pb-2.5 text-center">
+        <span className="font-racing text-[11px] uppercase tracking-widest text-orange-400/90">
           3D Telemetry Sphere · Drag to spin
         </span>
       </div>
 
-      <div className="relative h-full w-full">
+      <div className="relative w-full flex-1">
         {points.map((pt) => {
           // Rotate around Y then X
           const x1 = pt.x * cosY - pt.z * sinY;
