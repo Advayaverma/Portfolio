@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { skills } from "../data/portfolio";
 import { FadeIn } from "./FadeIn";
 import { SectionHeading } from "./SectionHeading";
+import { SkillSphere3D } from "./SkillSphere3D";
 
 const categories = Object.keys(skills) as (keyof typeof skills)[];
 
@@ -18,6 +19,8 @@ export function Skills() {
           title="Technical Skills"
           subtitle="Languages, frameworks, and tools I work with"
         />
+
+        <SkillSphere3D />
 
         <FadeIn>
           <div className="mb-8 flex flex-wrap justify-center gap-2">

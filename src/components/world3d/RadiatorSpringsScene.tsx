@@ -416,11 +416,12 @@ export function RadiatorSpringsScene({
         </group>
       ))}
 
-      {/* Pit-Crew NPCs */}
+      {/* Cars Movie NPCs (Mater, Fillmore, Doc Hudson, Luigi & Guido, Ramone, Sally) stationed off-track */}
       {PIT_CREW_NPCS.map((npc) => (
         <group
           key={npc.id}
           position={npc.position}
+          rotation={[0, npc.rotY, 0]}
           onClick={(e) => {
             e.stopPropagation();
             onSelectNpc(npc);
@@ -428,28 +429,159 @@ export function RadiatorSpringsScene({
         >
           {/* Glowing Pit Ring */}
           <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.04, 0]}>
-            <ringGeometry args={[1.1, 1.35, 24]} />
-            <meshBasicMaterial color={npc.color} transparent opacity={0.7} />
+            <ringGeometry args={[2.0, 2.25, 28]} />
+            <meshBasicMaterial color={npc.color} transparent opacity={0.65} />
           </mesh>
-          {/* Body */}
-          <mesh position={[0, 0.9, 0]} castShadow>
-            <boxGeometry args={[0.7, 1.0, 0.5]} />
-            <meshStandardMaterial color={npc.color} roughness={0.6} />
+
+          {/* Car Body (Fillmore is taller van, Luigi is compact Fiat) */}
+          <mesh position={[0, npc.variant === "fillmore" ? 0.65 : 0.52, 0]} castShadow receiveShadow>
+            <boxGeometry
+              args={[
+                npc.variant === "luigi" ? 1.35 : 1.65,
+                npc.variant === "fillmore" ? 0.85 : 0.5,
+                npc.variant === "luigi" ? 2.5 : 3.3,
+              ]}
+            />
+            <meshStandardMaterial
+              color={npc.color}
+              roughness={npc.variant === "mater" ? 0.85 : 0.25}
+              metalness={npc.variant === "mater" ? 0.15 : 0.45}
+            />
           </mesh>
-          {/* Head + Headset */}
-          <mesh position={[0, 1.65, 0]} castShadow>
-            <boxGeometry args={[0.5, 0.5, 0.5]} />
-            <meshStandardMaterial color="#fde68a" roughness={0.7} />
+
+          {/* Cabin */}
+          {npc.variant !== "fillmore" && (
+            <mesh
+              position={[0, 0.98, npc.variant === "mater" ? 0.35 : -0.15]}
+              castShadow
+            >
+              <boxGeometry
+                args={[
+                  npc.variant === "luigi" ? 1.15 : 1.35,
+                  0.46,
+                  npc.variant === "mater" ? 1.15 : npc.variant === "luigi" ? 1.3 : 1.55,
+                ]}
+              />
+              <meshStandardMaterial
+                color={npc.color}
+                roughness={npc.variant === "mater" ? 0.85 : 0.25}
+              />
+            </mesh>
+          )}
+
+          {/* Windshield Eyes */}
+          <mesh
+            position={[
+              0,
+              npc.variant === "fillmore" ? 0.85 : 0.98,
+              npc.variant === "mater"
+                ? 0.94
+                : npc.variant === "fillmore"
+                  ? 1.66
+                  : npc.variant === "luigi"
+                    ? 0.51
+                    : 0.64,
+            ]}
+            rotation={[-0.2, 0, 0]}
+          >
+            <boxGeometry args={[npc.variant === "luigi" ? 1.0 : 1.22, 0.32, 0.08]} />
+            <meshStandardMaterial color="#f8fafc" roughness={0.15} />
           </mesh>
-          <mesh position={[0, 1.92, 0]}>
-            <boxGeometry args={[0.56, 0.14, 0.56]} />
-            <meshStandardMaterial color="#18181b" />
+          <mesh
+            position={[
+              -0.24,
+              npc.variant === "fillmore" ? 0.85 : 0.98,
+              npc.variant === "mater"
+                ? 0.99
+                : npc.variant === "fillmore"
+                  ? 1.71
+                  : npc.variant === "luigi"
+                    ? 0.56
+                    : 0.69,
+            ]}
+            rotation={[-0.2, 0, 0]}
+          >
+            <boxGeometry args={[0.14, 0.14, 0.03]} />
+            <meshStandardMaterial color="#09090b" />
           </mesh>
-          <Html position={[0, 2.45, 0]} center distanceFactor={16}>
+          <mesh
+            position={[
+              0.24,
+              npc.variant === "fillmore" ? 0.85 : 0.98,
+              npc.variant === "mater"
+                ? 0.99
+                : npc.variant === "fillmore"
+                  ? 1.71
+                  : npc.variant === "luigi"
+                    ? 0.56
+                    : 0.69,
+            ]}
+            rotation={[-0.2, 0, 0]}
+          >
+            <boxGeometry args={[0.14, 0.14, 0.03]} />
+            <meshStandardMaterial color="#09090b" />
+          </mesh>
+
+          {/* Mater's tow crane arm in back */}
+          {npc.variant === "mater" && (
+            <mesh position={[0, 1.15, -1.05]} rotation={[-0.55, 0, 0]} castShadow>
+              <boxGeometry args={[0.14, 1.1, 0.14]} />
+              <meshStandardMaterial color="#52525b" metalness={0.7} roughness={0.4} />
+            </mesh>
+          )}
+
+          {/* Doc's chrome side trim */}
+          {npc.variant === "doc" && (
+            <mesh position={[0, 0.56, 0]}>
+              <boxGeometry args={[1.7, 0.08, 2.8]} />
+              <meshStandardMaterial color="#e4e4e7" metalness={0.85} roughness={0.2} />
+            </mesh>
+          )}
+
+          {/* Ramone's gold flame stripe */}
+          {npc.variant === "ramone" && (
+            <mesh position={[0, 0.56, 0]}>
+              <boxGeometry args={[1.7, 0.1, 2.5]} />
+              <meshStandardMaterial color="#facc15" emissive="#f97316" emissiveIntensity={0.35} />
+            </mesh>
+          )}
+
+          {/* Luigi's sidekick Guido (mini blue forklift) */}
+          {npc.variant === "luigi" && (
+            <group position={[1.45, 0, 0.2]}>
+              <mesh position={[0, 0.42, 0]} castShadow>
+                <boxGeometry args={[0.75, 0.55, 1.1]} />
+                <meshStandardMaterial color="#3b82f6" roughness={0.3} />
+              </mesh>
+              <mesh position={[0, 0.55, 0.68]}>
+                <boxGeometry args={[0.5, 0.06, 0.45]} />
+                <meshStandardMaterial color="#d4d4d8" metalness={0.7} />
+              </mesh>
+            </group>
+          )}
+
+          {/* 4 Wheels */}
+          {[
+            [-0.85, 0.3, 1.0],
+            [0.85, 0.3, 1.0],
+            [-0.85, 0.3, -1.0],
+            [0.85, 0.3, -1.0],
+          ].map((wPos, i) => (
+            <mesh
+              key={i}
+              position={wPos as [number, number, number]}
+              rotation={[0, 0, Math.PI / 2]}
+            >
+              <cylinderGeometry args={[0.3, 0.3, 0.24, 12]} />
+              <meshStandardMaterial color="#18181b" roughness={0.85} />
+            </mesh>
+          ))}
+
+          <Html position={[0, 2.35, 0]} center distanceFactor={18}>
             <button
               type="button"
               onClick={() => onSelectNpc(npc)}
-              className="whitespace-nowrap rounded-full border border-orange-500/40 bg-[#111113]/85 px-2.5 py-0.5 text-[10px] font-semibold text-orange-300 shadow backdrop-blur-sm hover:border-orange-400 hover:text-white"
+              className="whitespace-nowrap rounded-full border border-orange-500/50 bg-[#111113]/90 px-2.5 py-0.5 text-[11px] font-semibold text-orange-300 shadow-lg backdrop-blur-sm hover:border-orange-400 hover:text-white"
             >
               {npc.name}
             </button>

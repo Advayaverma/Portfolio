@@ -98,7 +98,7 @@ export function PitStopOverlay({
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -12, scale: 0.98 }}
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          className="pointer-events-auto max-h-[62vh] overflow-y-auto rounded-2xl border border-orange-500/30 bg-[#141418]/90 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.65)] backdrop-blur-xl"
+          className="pointer-events-auto rounded-2xl border border-orange-500/30 bg-[#141418]/90 p-5 shadow-[0_18px_50px_rgba(0,0,0,0.65)] backdrop-blur-xl"
           data-pit-overlay="true"
         >
           {/* Pit-board Header */}
@@ -159,7 +159,7 @@ export function PitStopOverlay({
           {/* STOP 1: ABOUT & SKILLS */}
           {stop.id === "about" && (
             <div className="space-y-3">
-              <p className="text-xs leading-relaxed text-zinc-300">
+              <p className="line-clamp-4 text-xs leading-relaxed text-zinc-300">
                 {profile.summary}
               </p>
 
@@ -181,7 +181,7 @@ export function PitStopOverlay({
                   ))}
                 </div>
                 <div className="flex flex-wrap gap-1.5">
-                  {skills[activeSkillCat].map((skill) => (
+                  {skills[activeSkillCat].slice(0, 8).map((skill) => (
                     <span
                       key={skill}
                       className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] text-zinc-300"
@@ -197,19 +197,19 @@ export function PitStopOverlay({
           {/* STOP 2: PROJECTS GARAGE */}
           {stop.id === "projects" && (
             <div className="space-y-3">
-              <div className="flex gap-1.5 overflow-x-auto pb-1">
+              <div className="flex flex-wrap gap-1.5">
                 {projects.map((proj, idx) => (
                   <button
                     key={proj.title}
                     type="button"
                     onClick={() => setSelectedProjectIdx(idx)}
-                    className={`shrink-0 rounded-lg px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                    className={`rounded-lg px-2 py-1 text-[11px] font-medium transition-colors ${
                       selectedProjectIdx === idx
                         ? "bg-gradient-to-r from-red-600/30 to-orange-500/30 text-orange-300 ring-1 ring-orange-400/40"
                         : "bg-white/5 text-zinc-400 hover:text-zinc-200"
                     }`}
                   >
-                    LAP {String(idx + 1).padStart(2, "0")}
+                    {String(idx + 1).padStart(2, "0")}
                   </button>
                 ))}
               </div>
@@ -218,11 +218,11 @@ export function PitStopOverlay({
                 <h2 className="font-racing text-sm font-bold text-zinc-100">
                   {selectedProject.title}
                 </h2>
-                <p className="mt-1.5 text-xs leading-relaxed text-zinc-400">
+                <p className="mt-1.5 line-clamp-3 text-xs leading-relaxed text-zinc-400">
                   {selectedProject.description}
                 </p>
                 <div className="mt-2.5 flex flex-wrap gap-1.5">
-                  {selectedProject.tech.map((t) => (
+                  {selectedProject.tech.slice(0, 6).map((t) => (
                     <span
                       key={t}
                       className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] text-zinc-300"
@@ -286,7 +286,7 @@ export function PitStopOverlay({
               </div>
 
               {recordTab === "experience" && (
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {experience.map((exp) => (
                     <div key={`${exp.company}-${exp.period}`}>
                       <div className="flex items-start justify-between gap-2">
@@ -303,13 +303,13 @@ export function PitStopOverlay({
                         </span>
                       </div>
                       <ul className="mt-2 space-y-1">
-                        {exp.highlights.slice(0, 3).map((h) => (
+                        {exp.highlights.slice(0, 2).map((h) => (
                           <li
                             key={h.slice(0, 30)}
                             className="flex gap-1.5 text-[11px] leading-relaxed text-zinc-400"
                           >
                             <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-orange-400" />
-                            <span>{h}</span>
+                            <span className="line-clamp-2">{h}</span>
                           </li>
                         ))}
                       </ul>
@@ -319,11 +319,11 @@ export function PitStopOverlay({
               )}
 
               {recordTab === "education" && (
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   {education.map((edu) => (
                     <div
                       key={`${edu.degree}-${edu.period}`}
-                      className="rounded-lg border border-white/5 bg-white/[0.03] p-2.5"
+                      className="rounded-lg border border-white/5 bg-white/[0.03] px-2.5 py-2"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <h3 className="text-xs font-semibold text-zinc-100">
@@ -335,12 +335,8 @@ export function PitStopOverlay({
                       </div>
                       <p className="mt-0.5 text-[11px] text-orange-400">
                         {edu.degree}
+                        {edu.details ? ` · ${edu.details}` : ""}
                       </p>
-                      {edu.details && (
-                        <p className="mt-0.5 text-[11px] text-zinc-400">
-                          {edu.details}
-                        </p>
-                      )}
                     </div>
                   ))}
                 </div>
@@ -351,7 +347,7 @@ export function PitStopOverlay({
                   {certifications.map((cert) => (
                     <div
                       key={cert.title}
-                      className="flex items-start gap-2 rounded-lg border border-white/5 bg-white/[0.03] p-2.5"
+                      className="flex items-start gap-2 rounded-lg border border-white/5 bg-white/[0.03] px-2.5 py-2"
                     >
                       <HiBadgeCheck
                         size={16}

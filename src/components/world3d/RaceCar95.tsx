@@ -33,28 +33,63 @@ export function RaceCar95({ nightFactor, speed = 0 }: RaceCar95Props) {
   return (
     <group>
       <group ref={bodyRef}>
-        {/* Main lower chassis */}
+        {/* Main glossy Lightning McQueen red chassis */}
         <mesh position={[0, 0.52, 0]} castShadow receiveShadow>
-          <boxGeometry args={[1.76, 0.48, 3.8]} />
-          <meshStandardMaterial color="#e11d2e" roughness={0.25} metalness={0.45} />
+          <boxGeometry args={[1.8, 0.48, 3.85]} />
+          <meshStandardMaterial color="#e11d2e" roughness={0.2} metalness={0.5} />
         </mesh>
 
-        {/* Sculpted hood slope */}
+        {/* Sculpted hood + Rust-eze yellow-orange flame accent */}
         <mesh position={[0, 0.68, 0.98]} rotation={[0.12, 0, 0]} castShadow>
-          <boxGeometry args={[1.64, 0.22, 1.5]} />
-          <meshStandardMaterial color="#e11d2e" roughness={0.25} metalness={0.45} />
+          <boxGeometry args={[1.68, 0.22, 1.52]} />
+          <meshStandardMaterial color="#e11d2e" roughness={0.2} metalness={0.5} />
+        </mesh>
+        <mesh position={[0, 0.79, 1.12]} rotation={[0.12, 0, 0]}>
+          <boxGeometry args={[0.92, 0.03, 0.72]} />
+          <meshStandardMaterial
+            color="#facc15"
+            emissive="#f97316"
+            emissiveIntensity={0.35}
+          />
         </mesh>
 
-        {/* Cabin / greenhouse */}
+        {/* Cabin / roof */}
         <mesh position={[0, 0.98, -0.18]} castShadow>
-          <boxGeometry args={[1.42, 0.48, 1.72]} />
-          <meshStandardMaterial color="#c81525" roughness={0.25} metalness={0.4} />
+          <boxGeometry args={[1.44, 0.48, 1.72]} />
+          <meshStandardMaterial color="#dc2626" roughness={0.22} metalness={0.45} />
+        </mesh>
+        {/* Roof #95 yellow-orange number plate */}
+        <mesh position={[0, 1.23, -0.18]}>
+          <boxGeometry args={[0.78, 0.02, 0.78]} />
+          <meshStandardMaterial color="#facc15" emissive="#f97316" emissiveIntensity={0.25} />
         </mesh>
 
-        {/* Windshield */}
+        {/* Expressive Windshield Eyes (McQueen signature) */}
         <mesh position={[0, 0.98, 0.69]} rotation={[-0.22, 0, 0]}>
-          <boxGeometry args={[1.3, 0.36, 0.08]} />
-          <meshStandardMaterial color="#1e293b" roughness={0.1} metalness={0.8} />
+          <boxGeometry args={[1.32, 0.36, 0.08]} />
+          <meshStandardMaterial color="#f8fafc" roughness={0.15} />
+        </mesh>
+        {/* Eyebrow lid */}
+        <mesh position={[0, 1.13, 0.66]} rotation={[-0.22, 0, 0]}>
+          <boxGeometry args={[1.34, 0.09, 0.1]} />
+          <meshStandardMaterial color="#dc2626" roughness={0.25} />
+        </mesh>
+        {/* Left & Right blue irises + dark pupils */}
+        <mesh position={[-0.3, 0.97, 0.735]} rotation={[-0.22, 0, 0]}>
+          <boxGeometry args={[0.24, 0.16, 0.03]} />
+          <meshStandardMaterial color="#2563eb" />
+        </mesh>
+        <mesh position={[-0.3, 0.97, 0.75]} rotation={[-0.22, 0, 0]}>
+          <boxGeometry args={[0.11, 0.1, 0.02]} />
+          <meshStandardMaterial color="#09090b" />
+        </mesh>
+        <mesh position={[0.3, 0.97, 0.735]} rotation={[-0.22, 0, 0]}>
+          <boxGeometry args={[0.24, 0.16, 0.03]} />
+          <meshStandardMaterial color="#2563eb" />
+        </mesh>
+        <mesh position={[0.3, 0.97, 0.75]} rotation={[-0.22, 0, 0]}>
+          <boxGeometry args={[0.11, 0.1, 0.02]} />
+          <meshStandardMaterial color="#09090b" />
         </mesh>
 
         {/* Rear window */}
@@ -63,49 +98,64 @@ export function RaceCar95({ nightFactor, speed = 0 }: RaceCar95Props) {
           <meshStandardMaterial color="#18181b" roughness={0.15} metalness={0.75} />
         </mesh>
 
-        {/* Side lightning bolt stripes */}
-        <mesh position={[-0.89, 0.56, 0.15]} rotation={[0, 0, 0]}>
-          <boxGeometry args={[0.03, 0.14, 2.3]} />
+        {/* Friendly grinning front bumper */}
+        <mesh position={[0, 0.38, 1.94]}>
+          <boxGeometry args={[0.92, 0.14, 0.05]} />
+          <meshStandardMaterial color="#f8fafc" roughness={0.2} />
+        </mesh>
+
+        {/* Side Lightning Bolt Stripes + #95 Door Plates */}
+        <mesh position={[-0.91, 0.56, 0.12]}>
+          <boxGeometry args={[0.03, 0.15, 2.45]} />
           <meshStandardMaterial
             color="#facc15"
             emissive="#f97316"
-            emissiveIntensity={0.25}
+            emissiveIntensity={0.35}
           />
         </mesh>
-        <mesh position={[0.89, 0.56, 0.15]}>
-          <boxGeometry args={[0.03, 0.14, 2.3]} />
+        <mesh position={[0.91, 0.56, 0.12]}>
+          <boxGeometry args={[0.03, 0.15, 2.45]} />
           <meshStandardMaterial
             color="#facc15"
             emissive="#f97316"
-            emissiveIntensity={0.25}
+            emissiveIntensity={0.35}
           />
+        </mesh>
+        {/* Orange flame tip behind front wheel */}
+        <mesh position={[-0.92, 0.58, 0.88]}>
+          <boxGeometry args={[0.04, 0.22, 0.52]} />
+          <meshStandardMaterial color="#f97316" emissive="#ea580c" emissiveIntensity={0.3} />
+        </mesh>
+        <mesh position={[0.92, 0.58, 0.88]}>
+          <boxGeometry args={[0.04, 0.22, 0.52]} />
+          <meshStandardMaterial color="#f97316" emissive="#ea580c" emissiveIntensity={0.3} />
         </mesh>
 
         {/* Rear spoiler */}
-        <mesh position={[-0.62, 0.92, -1.68]} castShadow>
+        <mesh position={[-0.64, 0.92, -1.72]} castShadow>
           <boxGeometry args={[0.1, 0.34, 0.18]} />
           <meshStandardMaterial color="#b91c1c" roughness={0.3} />
         </mesh>
-        <mesh position={[0.62, 0.92, -1.68]} castShadow>
+        <mesh position={[0.64, 0.92, -1.72]} castShadow>
           <boxGeometry args={[0.1, 0.34, 0.18]} />
           <meshStandardMaterial color="#b91c1c" roughness={0.3} />
         </mesh>
-        <mesh position={[0, 1.1, -1.72]} castShadow>
-          <boxGeometry args={[1.68, 0.08, 0.34]} />
-          <meshStandardMaterial color="#e11d2e" roughness={0.25} metalness={0.45} />
+        <mesh position={[0, 1.1, -1.75]} castShadow>
+          <boxGeometry args={[1.72, 0.08, 0.36]} />
+          <meshStandardMaterial color="#e11d2e" roughness={0.22} metalness={0.45} />
         </mesh>
 
-        {/* Headlights */}
-        <mesh position={[-0.58, 0.54, 1.91]}>
-          <boxGeometry args={[0.34, 0.14, 0.05]} />
+        {/* Headlight stickers */}
+        <mesh position={[-0.62, 0.54, 1.93]}>
+          <boxGeometry args={[0.32, 0.14, 0.05]} />
           <meshStandardMaterial
             color="#fef08a"
             emissive="#fde047"
             emissiveIntensity={headlightIntensity}
           />
         </mesh>
-        <mesh position={[0.58, 0.54, 1.91]}>
-          <boxGeometry args={[0.34, 0.14, 0.05]} />
+        <mesh position={[0.62, 0.54, 1.93]}>
+          <boxGeometry args={[0.32, 0.14, 0.05]} />
           <meshStandardMaterial
             color="#fef08a"
             emissive="#fde047"
@@ -114,7 +164,7 @@ export function RaceCar95({ nightFactor, speed = 0 }: RaceCar95Props) {
         </mesh>
         {nightFactor > 0.25 && (
           <spotLight
-            position={[0, 0.7, 1.95]}
+            position={[0, 0.7, 1.98]}
             angle={0.45}
             penumbra={0.6}
             intensity={nightFactor * 18}
@@ -124,7 +174,7 @@ export function RaceCar95({ nightFactor, speed = 0 }: RaceCar95Props) {
         )}
 
         {/* Taillights */}
-        <mesh position={[-0.58, 0.56, -1.91]}>
+        <mesh position={[-0.58, 0.56, -1.93]}>
           <boxGeometry args={[0.38, 0.12, 0.05]} />
           <meshStandardMaterial
             color="#ef4444"
@@ -132,7 +182,7 @@ export function RaceCar95({ nightFactor, speed = 0 }: RaceCar95Props) {
             emissiveIntensity={1.2 + nightFactor * 1.6}
           />
         </mesh>
-        <mesh position={[0.58, 0.56, -1.91]}>
+        <mesh position={[0.58, 0.56, -1.93]}>
           <boxGeometry args={[0.38, 0.12, 0.05]} />
           <meshStandardMaterial
             color="#ef4444"
@@ -142,7 +192,7 @@ export function RaceCar95({ nightFactor, speed = 0 }: RaceCar95Props) {
         </mesh>
       </group>
 
-      {/* 4 Wheels */}
+      {/* 4 Lightyear Racing Wheels with Red Rims */}
       {WHEEL_POSITIONS.map((pos, idx) => (
         <group
           key={idx}
@@ -152,12 +202,12 @@ export function RaceCar95({ nightFactor, speed = 0 }: RaceCar95Props) {
           }}
         >
           <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
-            <cylinderGeometry args={[0.32, 0.32, 0.26, 16]} />
+            <cylinderGeometry args={[0.33, 0.33, 0.27, 16]} />
             <meshStandardMaterial color="#18181b" roughness={0.85} />
           </mesh>
           <mesh rotation={[0, 0, Math.PI / 2]}>
-            <cylinderGeometry args={[0.17, 0.17, 0.28, 12]} />
-            <meshStandardMaterial color="#e4e4e7" roughness={0.25} metalness={0.85} />
+            <cylinderGeometry args={[0.18, 0.18, 0.29, 12]} />
+            <meshStandardMaterial color="#e11d2e" roughness={0.25} metalness={0.7} />
           </mesh>
         </group>
       ))}

@@ -2,6 +2,7 @@ import { HiExternalLink, HiCode } from "react-icons/hi";
 import { FaGithub } from "react-icons/fa";
 import { projects } from "../data/portfolio";
 import { FadeIn } from "./FadeIn";
+import { ProjectShelf3D } from "./ProjectShelf3D";
 import { SectionHeading } from "./SectionHeading";
 import SpotlightCard from "./reactbits/SpotlightCard";
 
@@ -13,6 +14,8 @@ export function Projects() {
           title="Projects"
           subtitle="Things I've built and shipped"
         />
+
+        <ProjectShelf3D />
 
         <div className="grid gap-8 md:grid-cols-2">
           {projects.map((project, index) => (

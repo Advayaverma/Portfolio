@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import * as THREE from "three";
 import { HiX } from "react-icons/hi";
 import {
   certifications,
@@ -7,52 +8,100 @@ import {
   experience,
   profile,
   projects,
+  skills,
 } from "../../data/portfolio";
+import { roadCurve } from "./roadPath";
+
+export type CarsNpcVariant =
+  | "mater"
+  | "fillmore"
+  | "doc"
+  | "luigi"
+  | "ramone"
+  | "sally";
 
 export interface PitCrewNPC {
   id: string;
   name: string;
   role: string;
   color: string;
+  variant: CarsNpcVariant;
   position: [number, number, number];
+  rotY: number;
   greeting: string;
   qa: { question: string; answer: string }[];
 }
 
+function roadsideSpot(
+  t: number,
+  side: -1 | 1,
+  distance = 5.8
+): { position: [number, number, number]; rotY: number } {
+  const pt = roadCurve.getPointAt(t);
+  const tan = roadCurve.getTangentAt(t).normalize();
+  const up = new THREE.Vector3(0, 1, 0);
+  const right = new THREE.Vector3().crossVectors(tan, up).normalize();
+  const pos = pt.clone().addScaledVector(right, side * distance);
+  // Face slightly toward the road
+  const toRoad = pt.clone().sub(pos).normalize();
+  const rotY = Math.atan2(toRoad.x, toRoad.z);
+  return { position: [pos.x, 0, pos.z], rotY };
+}
+
+const materSpot = roadsideSpot(0.14, -1, 5.8);
+const fillmoreSpot = roadsideSpot(0.32, 1, 5.8);
+const docSpot = roadsideSpot(0.48, 1, 5.8);
+const luigiSpot = roadsideSpot(0.64, -1, 5.8);
+const ramoneSpot = roadsideSpot(0.78, 1, 5.8);
+const sallySpot = roadsideSpot(0.89, -1, 5.8);
+
 export const PIT_CREW_NPCS: PitCrewNPC[] = [
   {
-    id: "chief",
-    name: "Crew Chief",
-    role: "Pit Lane Strategist",
-    color: "#e11d2e",
-    position: [-6.5, 0, 34],
+    id: "mater",
+    name: "Mater",
+    role: "Tow-Truck Pit Pal",
+    color: "#9a5b32",
+    variant: "mater",
+    ...materSpot,
     greeting:
-      "Welcome to Radiator Springs! Ask me about the driver behind #95.",
+      "Dad-gum! Welcome to Radiator Springs, McQueen! Ask me about the driver.",
     qa: [
-      {
-        question: "Who is Advaya?",
-        answer: profile.summary,
-      },
+      { question: "Who is Advaya?", answer: profile.summary },
       {
         question: "Where does he study?",
         answer: `${education[0].degree} at ${education[0].institution} (${education[0].period}) — ${education[0].details}.`,
       },
+    ],
+  },
+  {
+    id: "fillmore",
+    name: "Fillmore",
+    role: "Organic Fuel Shop",
+    color: "#14b8a6",
+    variant: "fillmore",
+    ...fillmoreSpot,
+    greeting:
+      "Man, this portfolio runs on pure clean data and organic ML pipelines.",
+    qa: [
       {
-        question: "Any certifications?",
-        answer: certifications
-          .map((c) => `${c.title} (${c.issuer}, ${c.date})`)
-          .join(" · "),
+        question: "What's his ML / AI stack?",
+        answer: skills["ML / AI"].join(", "),
+      },
+      {
+        question: "Tell me about his RAG Assistant",
+        answer: `${projects[5].title}: ${projects[5].description}`,
       },
     ],
   },
   {
-    id: "mechanic",
-    name: "Garage Mechanic",
-    role: "Lead Systems Builder",
-    color: "#f97316",
-    position: [8.5, 0, -2],
+    id: "doc",
+    name: "Doc Hudson",
+    role: "Fabulous Hudson Hornet · Crew Chief",
+    color: "#1e3a8a",
+    variant: "doc",
+    ...docSpot,
     greeting:
-      "Pop the hood! Want to hear about the AI and Data Engineering builds?",
+      "Turn right to go left, rookie. Want to inspect the engineering builds under the hood?",
     qa: [
       {
         question: "Tell me about AI-CDSS",
@@ -69,13 +118,56 @@ export const PIT_CREW_NPCS: PitCrewNPC[] = [
     ],
   },
   {
-    id: "scout",
-    name: "Track Scout",
-    role: "Telemetry & Recruitment",
+    id: "luigi",
+    name: "Luigi & Guido",
+    role: "Casa Della Tires · Pit Stop",
     color: "#facc15",
-    position: [-7.5, 0, -50],
+    variant: "luigi",
+    ...luigiSpot,
     greeting:
-      "You made it to the night stretch! Curious about internship experience or contact?",
+      "Pit stop! Fresh Lightyear tires in 2.5 seconds. Want to check his certifications?",
+    qa: [
+      {
+        question: "What certifications does he have?",
+        answer: certifications
+          .map((c) => `${c.title} (${c.issuer}, ${c.date})`)
+          .join(" · "),
+      },
+      {
+        question: "What Data Engineering tools?",
+        answer: skills["Data Engineering"].join(", "),
+      },
+    ],
+  },
+  {
+    id: "ramone",
+    name: "Ramone",
+    role: "House of Body Art",
+    color: "#9333ea",
+    variant: "ramone",
+    ...ramoneSpot,
+    greeting:
+      "Low and slow, baby. Check out the full-stack and frontend paint job!",
+    qa: [
+      {
+        question: "What Web & Backend skills?",
+        answer: skills["Web & Backend"].join(", "),
+      },
+      {
+        question: "Tell me about Digital Library Cloud",
+        answer: `${projects[3].title}: ${projects[3].description}`,
+      },
+    ],
+  },
+  {
+    id: "sally",
+    name: "Sally Carrera",
+    role: "Cozy Cone · Route 66 Guide",
+    color: "#38bdf8",
+    variant: "sally",
+    ...sallySpot,
+    greeting:
+      "You made it past the sunset stretch! Want to check his internship experience or reach out?",
     qa: [
       {
         question: "What's his internship experience?",
