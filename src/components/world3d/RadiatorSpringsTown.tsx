@@ -26,9 +26,8 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
   const cozyCone = useMemo(() => getRoadsideTransform(0.42, -1, 12.5), []);
   const luigisTires = useMemo(() => getRoadsideTransform(0.64, -1, 12.0), []);
 
-  // Right side (North): Fillmore's -> Doc Hudson's Clinic -> Flo's V8 -> Ramone's
+  // Right side (North): Fillmore's -> Flo's V8 -> Ramone's
   const fillmoresSpot = useMemo(() => getRoadsideTransform(0.34, 1, 13.5), []);
-  const docsClinic = useMemo(() => getRoadsideTransform(0.52, 1, 12.5), []);
   const flosCafe = useMemo(() => getRoadsideTransform(0.68, 1, 13.0), []);
   const ramonesArt = useMemo(() => getRoadsideTransform(0.82, 1, 12.5), []);
 
@@ -231,27 +230,6 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
             <meshStandardMaterial color="#94a3b8" metalness={0.6} roughness={0.4} />
           </mesh>
         </group>
-      </group>
-
-      {/* 5B. DOC HUDSON'S ORNAMENT VALLEY CLINIC / RACING MUSEUM */}
-      <group position={docsClinic.position} rotation={[0, docsClinic.rotY + Math.PI / 2, 0]}>
-        <mesh position={[0, 1.8, 0]} castShadow receiveShadow>
-          <boxGeometry args={[7.4, 3.6, 5.2]} />
-          <meshStandardMaterial color="#e7e5e4" roughness={0.8} />
-        </mesh>
-        <mesh position={[0, 3.8, 0]}>
-          <boxGeometry args={[7.8, 0.45, 5.6]} />
-          <meshStandardMaterial color="#1e3a8a" roughness={0.5} />
-        </mesh>
-        <mesh position={[0, 1.35, 2.65]}>
-          <boxGeometry args={[3.2, 2.6, 0.14]} />
-          <meshStandardMaterial color="#1e40af" roughness={0.4} />
-        </mesh>
-        <Html position={[0, 4.6, 2.6]} center distanceFactor={18}>
-          <div className="pointer-events-none whitespace-nowrap rounded border border-blue-400/60 bg-[#0f172a]/90 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-blue-200 shadow">
-            DOC HUDSON CLINIC · MUSEUM
-          </div>
-        </Html>
       </group>
 
       {/* 6. FLO'S V8 CAFÉ (flos_cafe.glb) */}

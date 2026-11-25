@@ -53,10 +53,10 @@ function roadsideSpot(
 const materSpot = roadsideSpot(0.22, -1, 5.8);
 const fillmoreSpot = roadsideSpot(0.34, 1, 5.8);
 const sallySpot = roadsideSpot(0.42, -1, 5.8);
-const docSpot = roadsideSpot(0.52, 1, 5.8);
 const luigiSpot = roadsideSpot(0.64, -1, 5.8);
 const floSpot = roadsideSpot(0.68, 1, 6.2);
 const ramoneSpot = roadsideSpot(0.82, 1, 5.8);
+const docSpot = roadsideSpot(0.92, 1, 5.6);
 
 export const PIT_CREW_NPCS: PitCrewNPC[] = [
   {
