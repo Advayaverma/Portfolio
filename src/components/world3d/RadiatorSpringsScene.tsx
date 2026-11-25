@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Html, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { RaceCar95 } from "./RaceCar95";
+import { RadiatorSpringsTown } from "./RadiatorSpringsTown";
 import { roadCurve, STOP_PROGRESS } from "./roadPath";
 import { PIT_CREW_NPCS, type PitCrewNPC } from "./PitCrewDialogue";
 
@@ -341,6 +342,9 @@ export function RadiatorSpringsScene({
           />
         </mesh>
       ))}
+
+      {/* Radiator Springs Town Landmarks (Cadillac Range, Willy's Butte, Courthouse, Cozy Cone, Flo's V8, Luigi's, Ramone's) */}
+      <RadiatorSpringsTown nightFactor={nightFactor} />
 
       {/* Red-rock Mesas */}
       {MESAS.map((m, idx) => (
