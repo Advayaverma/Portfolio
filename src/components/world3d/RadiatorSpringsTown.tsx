@@ -61,7 +61,7 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
       </group>
 
       {/* 2. RADIATOR SPRINGS CURIOS (curios.glb) */}
-      <group position={curiosSpot.position} rotation={[0, curiosSpot.rotY, 0]}>
+      <group position={curiosSpot.position} rotation={[0, curiosSpot.rotY + Math.PI, 0]}>
         <GlbModel url="/models/curios.glb" targetLength={10} />
       </group>
 
