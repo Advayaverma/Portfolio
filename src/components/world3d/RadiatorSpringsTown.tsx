@@ -53,7 +53,7 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
           <boxGeometry args={[4.6, 1.8, 0.14]} />
           <meshStandardMaterial color="#14532d" roughness={0.6} />
         </mesh>
-        <Html position={[0, 5.9, 0.35]} center distanceFactor={16}>
+        <Html position={[0, 5.9, 0.35]} center distanceFactor={16} zIndexRange={[10, 0]}>
           <div className="pointer-events-none whitespace-nowrap rounded border-2 border-white/80 bg-[#14532d] px-3 py-1 text-xs font-bold tracking-wide text-white shadow-lg">
             Radiator Springs ↘
           </div>
@@ -61,7 +61,7 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
       </group>
 
       {/* 2. RADIATOR SPRINGS CURIOS (curios.glb) */}
-      <group position={curiosSpot.position} rotation={[0, curiosSpot.rotY - Math.PI / 2, 0]}>
+      <group position={curiosSpot.position} rotation={[0, curiosSpot.rotY, 0]}>
         <GlbModel url="/models/curios.glb" targetLength={10} />
       </group>
 
@@ -104,7 +104,7 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
           <torusGeometry args={[0.52, 0.2, 8, 16]} />
           <meshStandardMaterial color="#18181b" roughness={0.9} />
         </mesh>
-        <Html position={[0, 4.6, 3.8]} center distanceFactor={18}>
+        <Html position={[0, 4.6, 3.8]} center distanceFactor={18} zIndexRange={[10, 0]}>
           <div className="pointer-events-none whitespace-nowrap rounded border border-amber-700/80 bg-[#3f2a1d]/90 px-2.5 py-0.5 text-center text-[10px] font-extrabold tracking-wider text-amber-100 shadow">
             TOW MATER · SALVAGE
           </div>

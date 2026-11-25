@@ -73,6 +73,45 @@ function buildRoadGeometry(curve: THREE.CatmullRomCurve3, width: number, segment
   return geo;
 }
 
+function buildRoadEdgeRibbon(
+  curve: THREE.CatmullRomCurve3,
+  offsetFromCenter: number,
+  stripWidth: number,
+  yHeight: number,
+  segments = 140
+) {
+  const positions: number[] = [];
+  const indices: number[] = [];
+  const up = new THREE.Vector3(0, 1, 0);
+
+  for (let i = 0; i <= segments; i++) {
+    const t = i / segments;
+    const pt = curve.getPointAt(t);
+    const tangent = curve.getTangentAt(t).normalize();
+    const right = new THREE.Vector3().crossVectors(tangent, up).normalize();
+
+    const inner = pt.clone().addScaledVector(right, offsetFromCenter - stripWidth / 2);
+    const outer = pt.clone().addScaledVector(right, offsetFromCenter + stripWidth / 2);
+
+    positions.push(inner.x, yHeight, inner.z);
+    positions.push(outer.x, yHeight, outer.z);
+
+    if (i < segments) {
+      const a = i * 2;
+      const b = a + 1;
+      const c = a + 2;
+      const d = a + 3;
+      indices.push(a, c, b, b, c, d);
+    }
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geo.setIndex(indices);
+  geo.computeVertexNormals();
+  return geo;
+}
+
 export function RadiatorSpringsScene({
   targetProgress,
   exploreMode,
@@ -110,6 +149,22 @@ export function RadiatorSpringsScene({
   }, [exploreMode, onNearbyNpcChange]);
 
   const roadGeometry = useMemo(() => buildRoadGeometry(roadCurve, 6.2, 140), []);
+  const leftCurbGeo = useMemo(
+    () => buildRoadEdgeRibbon(roadCurve, -3.35, 0.55, 0.035, 140),
+    []
+  );
+  const rightCurbGeo = useMemo(
+    () => buildRoadEdgeRibbon(roadCurve, 3.35, 0.55, 0.035, 140),
+    []
+  );
+  const leftLineGeo = useMemo(
+    () => buildRoadEdgeRibbon(roadCurve, -2.85, 0.14, 0.03, 140),
+    []
+  );
+  const rightLineGeo = useMemo(
+    () => buildRoadEdgeRibbon(roadCurve, 2.85, 0.14, 0.03, 140),
+    []
+  );
 
   const stopGates = useMemo(() => {
     return STOP_PROGRESS.map((t) => {
@@ -313,9 +368,29 @@ export function RadiatorSpringsScene({
         <meshStandardMaterial ref={groundMatRef} color="#451a12" roughness={0.95} />
       </mesh>
 
-      {/* Route 66 Asphalt Road */}
+      {/* Route 66 Black Asphalt Road + Curbs & Edge Lines */}
       <mesh geometry={roadGeometry} receiveShadow>
-        <meshStandardMaterial color="#18181b" roughness={0.85} />
+        <meshStandardMaterial color="#09090b" roughness={0.9} />
+      </mesh>
+      <mesh geometry={leftCurbGeo} receiveShadow>
+        <meshStandardMaterial color="#a8a29e" roughness={0.85} />
+      </mesh>
+      <mesh geometry={rightCurbGeo} receiveShadow>
+        <meshStandardMaterial color="#a8a29e" roughness={0.85} />
+      </mesh>
+      <mesh geometry={leftLineGeo}>
+        <meshStandardMaterial
+          color="#e4e4e7"
+          emissive="#ffffff"
+          emissiveIntensity={0.08 + nightFactor * 0.25}
+        />
+      </mesh>
+      <mesh geometry={rightLineGeo}>
+        <meshStandardMaterial
+          color="#e4e4e7"
+          emissive="#ffffff"
+          emissiveIntensity={0.08 + nightFactor * 0.25}
+        />
       </mesh>
 
       {/* Dashed yellow center lines */}
@@ -434,7 +509,13 @@ export function RadiatorSpringsScene({
             </group>
           )}
 
-          <Html position={[0, 2.35, 0]} center distanceFactor={18}>
+          <Html
+            position={[0, 2.35, 0]}
+            center
+            distanceFactor={18}
+            occlude
+            zIndexRange={[10, 0]}
+          >
             <button
               type="button"
               onClick={() => onSelectNpc(npc)}
