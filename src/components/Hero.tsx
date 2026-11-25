@@ -1,12 +1,13 @@
-import { useRef } from "react";
+import { lazy, Suspense, useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { HiDownload } from "react-icons/hi";
 import { profile } from "../data/portfolio";
 import { scrollToSection } from "../hooks/useActiveSection";
-import Aurora from "./reactbits/Aurora";
 import SplitText from "./reactbits/SplitText";
 import DecryptedText from "./reactbits/DecryptedText";
 import { Lightning95Badge } from "./Lightning95Badge";
+
+const Aurora = lazy(() => import("./reactbits/Aurora"));
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
@@ -27,12 +28,14 @@ export function Hero() {
     >
       {!prefersReducedMotion && (
         <div className="pointer-events-none absolute inset-0 opacity-60">
-          <Aurora
-            colorStops={["#E11D2E", "#F97316", "#FACC15"]}
-            blend={0.55}
-            amplitude={1.0}
-            speed={0.5}
-          />
+          <Suspense fallback={null}>
+            <Aurora
+              colorStops={["#E11D2E", "#F97316", "#FACC15"]}
+              blend={0.55}
+              amplitude={1.0}
+              speed={0.5}
+            />
+          </Suspense>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#111113]" />
         </div>
       )}
