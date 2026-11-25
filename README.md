@@ -1,13 +1,24 @@
 # Advaya Verma — Portfolio
 
-A dark, modern single-page portfolio built with React, TypeScript, and Vite. Showcases projects, skills, education, and certifications.
+An interactive *Cars*-themed developer portfolio built with **React 19**, **TypeScript**, **Three.js**, and **Vite** — featuring an explorable **3D Radiator Springs** drive-through alongside a **Classic View** toggle. Showcases projects, experience, skills, education, and certifications.
+
+## Modes & Highlights
+
+- **3D Radiator Springs World (Default)**
+  - **Journey Mode:** Drive **Lightning McQueen (#95)** down Route 66 using scroll, `W` / `↑` (forward), `S` / `↓` (backward), or the right-side track navigation dots. Each pit stop smoothly glides a telemetry board across the screen.
+  - **Free Drive (`[E]`):** Roam freely around town with `WASD` / Arrow keys (`Shift` to boost) or the on-screen touch controls on mobile.
+  - **Radiator Springs Landmarks & Characters:** Includes **Radiator Springs Curios**, **Mater's Towing & Salvage**, **Fillmore's Taste-In**, **Cozy Cone Motel**, **Luigi's Casa Della Tires**, **Flo's V8 Café**, **Ramone's House of Body Art**, and the **Courthouse**, with interactive dialogue for **Mater**, **Fillmore**, **Sally**, **Luigi & Guido**, **Flo**, **Ramone**, and **Doc Hudson** (press `[F]` nearby or click their nameplate).
+- **Classic View (`Classic view` ↔ `Back to 3D`)**
+  - Racing-inspired UI with **ReactBits** (`Aurora`, `SplitText`, `DecryptedText`, `ShinyText`, `SpotlightCard`), **Framer Motion** scroll progress & flame dividers, a draggable **3D Telemetry Skill Sphere**, and an interactive **Pit-Garage Project Shelf** modal.
+  - Automatically defaults to Classic View when `prefers-reduced-motion: reduce` is enabled.
 
 ## Tech Stack
 
 - **React 19** + **TypeScript**
 - **Vite** — dev server and production builds
-- **Tailwind CSS** — styling
-- **Framer Motion** — scroll and entrance animations
+- **Tailwind CSS v4** — styling
+- **Three.js** (`@react-three/fiber`, `@react-three/drei`) — 3D Radiator Springs scene & `.glb` models
+- **Framer Motion**, **GSAP**, **OGL** — animations, ReactBits effects, and WebGL Aurora
 - **react-icons** — social and UI icons
 
 ## Getting Started
@@ -46,6 +57,7 @@ All portfolio text, links, and resume data live in one file:
 | `profile.resumeFile` | Path to resume PDF in `public/` |
 | `projects` | Project titles, descriptions, `github` and `demo` links |
 | `skills` | Skill categories and items |
+| `experience` | Internships and work history |
 | `education` | Schools, degrees, coursework |
 | `certifications` | Cert titles, issuers, dates |
 
@@ -53,22 +65,29 @@ Leave a link as `""` if you don't have one yet — the corresponding button won'
 
 ### Resume
 
-Replace `public/Advaya_Verma_Resume_v1.pdf` with an updated PDF and keep the filename in sync with `profile.resumeFile`.
+Replace `public/Advaya_Verma_resume.pdf` with an updated PDF and keep the filename in sync with `profile.resumeFile`.
 
 ## Project Structure
 
-```
+```text
 src/
-├── components/     # UI sections (Hero, About, Projects, etc.)
+├── components/
+│   ├── reactbits/          # Aurora, SplitText, DecryptedText, ShinyText, SpotlightCard
+│   ├── world3d/            # CarsWorld3D, RadiatorSpringsScene, RadiatorSpringsTown, RaceCar95, PitStopOverlay, PitCrewDialogue, GlbModel
+│   ├── ProjectShelf3D.tsx  # Pit-Garage project shelf & detail modal
+│   ├── SkillSphere3D.tsx   # Draggable 3D skill sphere
+│   └── ...                 # Hero, About, Skills, Projects, Experience, Education, Certifications, Contact
 ├── data/
-│   └── portfolio.ts   # ← edit content here
-├── hooks/          # scroll and active-section helpers
-├── App.tsx         # page layout
-├── index.css       # global styles and Tailwind
-└── main.tsx        # app entry point
+│   └── portfolio.ts        # ← edit content here
+├── hooks/                  # scroll and active-section helpers
+├── App.tsx                 # 3D / Classic view switcher and layout
+├── index.css               # global styles and Tailwind
+└── main.tsx                # app entry point
 
 public/
-└── Advaya_Verma_Resume_v1.pdf
+├── models/                 # .glb 3D car and building assets
+├── favicon.svg
+└── Advaya_Verma_resume.pdf
 ```
 
 <!-- ## Deployment
