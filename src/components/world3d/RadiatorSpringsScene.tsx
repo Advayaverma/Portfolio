@@ -29,21 +29,6 @@ const NIGHT_SKY = new THREE.Color("#07070f");
 const SUNSET_GROUND = new THREE.Color("#451a12");
 const NIGHT_GROUND = new THREE.Color("#141115");
 
-interface MesaProp {
-  position: [number, number, number];
-  scale: [number, number, number];
-  color: string;
-}
-
-const MESAS: MesaProp[] = [
-  { position: [-22, 4.5, 28], scale: [12, 9, 10], color: "#9a3412" },
-  { position: [24, 6, 14], scale: [14, 12, 12], color: "#7c2d12" },
-  { position: [-26, 7, -8], scale: [15, 14, 13], color: "#9a3412" },
-  { position: [22, 5, -28], scale: [12, 10, 11], color: "#b45309" },
-  { position: [-24, 6.5, -52], scale: [16, 13, 12], color: "#7c2d12" },
-  { position: [26, 8, -62], scale: [15, 16, 14], color: "#9a3412" },
-];
-
 const CACTUS_POSITIONS: [number, number, number][] = [
   [-11, 0, 38],
   [9, 0, 30],
@@ -343,16 +328,8 @@ export function RadiatorSpringsScene({
         </mesh>
       ))}
 
-      {/* Radiator Springs Town Landmarks (Cadillac Range, Willy's Butte, Courthouse, Cozy Cone, Flo's V8, Luigi's, Ramone's) */}
+      {/* Radiator Springs Town Landmarks (Courthouse, Cozy Cone, Flo's V8, Luigi's, Ramone's) */}
       <RadiatorSpringsTown nightFactor={nightFactor} />
-
-      {/* Red-rock Mesas */}
-      {MESAS.map((m, idx) => (
-        <mesh key={idx} position={m.position} castShadow receiveShadow>
-          <cylinderGeometry args={[m.scale[0] * 0.55, m.scale[0], m.scale[1], 7]} />
-          <meshStandardMaterial color={m.color} roughness={0.9} flatShading />
-        </mesh>
-      ))}
 
       {/* Desert Cacti */}
       {CACTUS_POSITIONS.map((pos, idx) => (

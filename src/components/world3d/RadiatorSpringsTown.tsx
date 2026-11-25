@@ -17,15 +17,6 @@ function getRoadsideTransform(t: number, side: -1 | 1, offset: number) {
   return { position: [pos.x, 0, pos.z] as [number, number, number], rotY };
 }
 
-const CADILLAC_FINS = [
-  { x: -68, z: -125, h: 36, w: 14, rotZ: -0.45 },
-  { x: -38, z: -132, h: 46, w: 16, rotZ: -0.42 },
-  { x: -10, z: -138, h: 52, w: 18, rotZ: -0.44 },
-  { x: 22, z: -134, h: 44, w: 16, rotZ: -0.4 },
-  { x: 52, z: -128, h: 38, w: 15, rotZ: -0.43 },
-  { x: 78, z: -122, h: 32, w: 13, rotZ: -0.46 },
-];
-
 export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
   const entranceGate = useMemo(() => getRoadsideTransform(0.08, 1, 0), []);
   const cozyCone = useMemo(() => getRoadsideTransform(0.24, -1, 11.5), []);
@@ -37,32 +28,7 @@ export function RadiatorSpringsTown({ nightFactor }: RadiatorSpringsTownProps) {
 
   return (
     <group>
-      {/* 1. CADILLAC RANGE (Iconic tilted tailfin rock spires on horizon) */}
-      {CADILLAC_FINS.map((fin, idx) => (
-        <mesh
-          key={idx}
-          position={[fin.x, fin.h * 0.42, fin.z]}
-          rotation={[0.08, 0, fin.rotZ]}
-          castShadow
-        >
-          <boxGeometry args={[fin.w, fin.h, 12]} />
-          <meshStandardMaterial color="#8c3b2b" roughness={0.92} flatShading />
-        </mesh>
-      ))}
-
-      {/* 2. WILLY'S BUTTE / RADIATOR CAP MESA (Centered behind Courthouse) */}
-      <group position={[0, 0, -100]}>
-        <mesh position={[0, 9, 0]} receiveShadow>
-          <cylinderGeometry args={[8, 28, 18, 10]} />
-          <meshStandardMaterial color="#9a4424" roughness={0.95} flatShading />
-        </mesh>
-        <mesh position={[0, 20, 0]} castShadow>
-          <cylinderGeometry args={[14, 10, 5.5, 10]} />
-          <meshStandardMaterial color="#7c2d12" roughness={0.92} flatShading />
-        </mesh>
-      </group>
-
-      {/* 3. RADIATOR SPRINGS COURTHOUSE (End of Main Street) */}
+      {/* 1. RADIATOR SPRINGS COURTHOUSE (End of Main Street) */}
       <group position={[0, 0, -76]}>
         <mesh position={[0, 3.2, 0]} castShadow receiveShadow>
           <boxGeometry args={[12, 6.4, 7]} />
