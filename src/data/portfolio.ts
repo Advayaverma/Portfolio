@@ -320,4 +320,11 @@ export const certifications = [
     issuer: "The Hashgraph Association",
     date: "Mar 2026",
   },
+  {
+    title:
+      "Hacktoberfest 26 — Certificate of Achievement (Winner: Grounded Knowledge-Graph Q&A, GraphMind)",
+    issuer:
+      "Hacktoberfest Hack Day Amaravati × AIBPT Club - VIT-AP (MLH × DEV · DigitalOcean)",
+    date: "Oct 2026",
+  },
 ];
